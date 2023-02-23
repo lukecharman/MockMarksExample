@@ -4,8 +4,8 @@ import StubbieTestUtils
 
 class StubbieSamplerUITests: StubbieUITestCase {
 
-  func test_whenThis_thenThat() {
+  func test_mockedResponse_array() {
     launchApp(withStubsNamed: #function)
-    XCTAssert(self.app.staticTexts["STUBBED"].waitForExistence(timeout: 20))
+    XCTAssert(self.app.staticTexts["STUBBED"].waitForExistence(timeout: 5))
   }
 }

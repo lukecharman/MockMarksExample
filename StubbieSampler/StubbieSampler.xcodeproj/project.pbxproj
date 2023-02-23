@@ -17,7 +17,7 @@
 		8154875F29A696F10044AF9B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8154875E29A696F10044AF9B /* Assets.xcassets */; };
 		8154876229A696F10044AF9B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8154876029A696F10044AF9B /* LaunchScreen.storyboard */; };
 		8154877729A696F20044AF9B /* StubbieSamplerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8154877629A696F20044AF9B /* StubbieSamplerUITests.swift */; };
-		8154878A29A697F70044AF9B /* test_whenThis_thenThat().json in Resources */ = {isa = PBXBuildFile; fileRef = 8154878929A697F70044AF9B /* test_whenThis_thenThat().json */; };
+		8154878A29A697F70044AF9B /* test_mockedResponse_array().json in Resources */ = {isa = PBXBuildFile; fileRef = 8154878929A697F70044AF9B /* test_mockedResponse_array().json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,7 +41,7 @@
 		8154876329A696F10044AF9B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8154877229A696F20044AF9B /* StubbieSamplerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StubbieSamplerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8154877629A696F20044AF9B /* StubbieSamplerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubbieSamplerUITests.swift; sourceTree = "<group>"; };
-		8154878929A697F70044AF9B /* test_whenThis_thenThat().json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "test_whenThis_thenThat().json"; sourceTree = "<group>"; };
+		8154878929A697F70044AF9B /* test_mockedResponse_array().json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "test_mockedResponse_array().json"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,7 +117,7 @@
 		8154878829A697DE0044AF9B /* Stubs */ = {
 			isa = PBXGroup;
 			children = (
-				8154878929A697F70044AF9B /* test_whenThis_thenThat().json */,
+				8154878929A697F70044AF9B /* test_mockedResponse_array().json */,
 			);
 			path = Stubs;
 			sourceTree = "<group>";
@@ -211,7 +211,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8154876229A696F10044AF9B /* LaunchScreen.storyboard in Resources */,
-				8154878A29A697F70044AF9B /* test_whenThis_thenThat().json in Resources */,
+				8154878A29A697F70044AF9B /* test_mockedResponse_array().json in Resources */,
 				8154875F29A696F10044AF9B /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
