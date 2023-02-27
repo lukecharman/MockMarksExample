@@ -16,7 +16,7 @@ class ViewModel {
     self.urlSession = urlSession
   }
 
-  func fetchString(completion: @escaping (Result<String, Error>) -> Void) {
+  func fetchRandomWord(completion: @escaping (Result<String, Error>) -> Void) {
     let request = URLRequest(url: URL(string: "https://random-word-api.herokuapp.com/word")!)
 
     urlSession.dataTask(with: request) { data, response, error in
@@ -29,6 +29,18 @@ class ViewModel {
       }
 
       completion(.success(newString))
+    }.resume()
+  }
+
+  func fetchLanguageCount(completion: @escaping (Result<Int, Error>) -> Void) {
+    let request = URLRequest(url: URL(string: "https://random-word-api.herokuapp.com/languages")!)
+
+    urlSession.dataTask(with: request) { data, response, error in
+      guard let data, let json = try? JSONSerialization.jsonObject(with: data) as? [String] else {
+        return completion(.failure(ViewModelError.generic))
+      }
+
+      completion(.success(json.count))
     }.resume()
   }
 }

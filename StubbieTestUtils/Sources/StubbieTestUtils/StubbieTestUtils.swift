@@ -1,4 +1,3 @@
-import Stubbie
 import XCTest
 
 open class StubbieUITestCase: XCTestCase {
@@ -11,7 +10,7 @@ open class StubbieUITestCase: XCTestCase {
     continueAfterFailure = false
 
     app = XCUIApplication()
-    app.launchEnvironment[Stubbie.K.isRunningXCUI] = String(true)
+    app.launchEnvironment["XCUI_IS_RUNNING"] = String(true)
   }
 
   override public func tearDown() {
@@ -22,7 +21,7 @@ open class StubbieUITestCase: XCTestCase {
 
   public func launchApp(withStubsNamed name: String? = nil) {
     if let name {
-      app.launchEnvironment[Stubbie.K.initialMockJSON] = name
+      app.launchEnvironment["XCUI_INITIAL_MOCK_JSON"] = name
     }
 
     app.launch()

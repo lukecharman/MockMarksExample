@@ -17,7 +17,11 @@
 		8154875F29A696F10044AF9B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8154875E29A696F10044AF9B /* Assets.xcassets */; };
 		8154876229A696F10044AF9B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8154876029A696F10044AF9B /* LaunchScreen.storyboard */; };
 		8154877729A696F20044AF9B /* StubbieSamplerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8154877629A696F20044AF9B /* StubbieSamplerUITests.swift */; };
-		8154878A29A697F70044AF9B /* test_mockedResponse_array().json in Resources */ = {isa = PBXBuildFile; fileRef = 8154878929A697F70044AF9B /* test_mockedResponse_array().json */; };
+		8154878A29A697F70044AF9B /* test_singleResponse().json in Resources */ = {isa = PBXBuildFile; fileRef = 8154878929A697F70044AF9B /* test_singleResponse().json */; };
+		A31D52C729ABF4CF005D4EF5 /* test_singleStubbedResponse().json in Resources */ = {isa = PBXBuildFile; fileRef = A31D52C629ABF4CF005D4EF5 /* test_singleStubbedResponse().json */; };
+		A31D52C929ACF970005D4EF5 /* test_twoStubbedResponsesToTheSameEndpoint().json in Resources */ = {isa = PBXBuildFile; fileRef = A31D52C829ACF970005D4EF5 /* test_twoStubbedResponsesToTheSameEndpoint().json */; };
+		A31D52CB29ACFA96005D4EF5 /* XCUIElement+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A31D52CA29ACFA96005D4EF5 /* XCUIElement+Extensions.swift */; };
+		A31D52CD29ACFAFE005D4EF5 /* test_twoStubbedResponsesToTwoDifferentEndpoints().json in Resources */ = {isa = PBXBuildFile; fileRef = A31D52CC29ACFAFE005D4EF5 /* test_twoStubbedResponsesToTwoDifferentEndpoints().json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,7 +45,11 @@
 		8154876329A696F10044AF9B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8154877229A696F20044AF9B /* StubbieSamplerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StubbieSamplerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8154877629A696F20044AF9B /* StubbieSamplerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubbieSamplerUITests.swift; sourceTree = "<group>"; };
-		8154878929A697F70044AF9B /* test_mockedResponse_array().json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "test_mockedResponse_array().json"; sourceTree = "<group>"; };
+		8154878929A697F70044AF9B /* test_singleResponse().json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "test_singleResponse().json"; sourceTree = "<group>"; };
+		A31D52C629ABF4CF005D4EF5 /* test_singleStubbedResponse().json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "test_singleStubbedResponse().json"; sourceTree = "<group>"; };
+		A31D52C829ACF970005D4EF5 /* test_twoStubbedResponsesToTheSameEndpoint().json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "test_twoStubbedResponsesToTheSameEndpoint().json"; sourceTree = "<group>"; };
+		A31D52CA29ACFA96005D4EF5 /* XCUIElement+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCUIElement+Extensions.swift"; sourceTree = "<group>"; };
+		A31D52CC29ACFAFE005D4EF5 /* test_twoStubbedResponsesToTwoDifferentEndpoints().json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "test_twoStubbedResponsesToTwoDifferentEndpoints().json"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +111,7 @@
 			isa = PBXGroup;
 			children = (
 				8154877629A696F20044AF9B /* StubbieSamplerUITests.swift */,
+				A31D52CA29ACFA96005D4EF5 /* XCUIElement+Extensions.swift */,
 			);
 			path = StubbieSamplerUITests;
 			sourceTree = "<group>";
@@ -117,7 +126,10 @@
 		8154878829A697DE0044AF9B /* Stubs */ = {
 			isa = PBXGroup;
 			children = (
-				8154878929A697F70044AF9B /* test_mockedResponse_array().json */,
+				8154878929A697F70044AF9B /* test_singleResponse().json */,
+				A31D52C629ABF4CF005D4EF5 /* test_singleStubbedResponse().json */,
+				A31D52C829ACF970005D4EF5 /* test_twoStubbedResponsesToTheSameEndpoint().json */,
+				A31D52CC29ACFAFE005D4EF5 /* test_twoStubbedResponsesToTwoDifferentEndpoints().json */,
 			);
 			path = Stubs;
 			sourceTree = "<group>";
@@ -212,8 +224,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				8154876229A696F10044AF9B /* LaunchScreen.storyboard in Resources */,
-				8154878A29A697F70044AF9B /* test_mockedResponse_array().json in Resources */,
+				A31D52C729ABF4CF005D4EF5 /* test_singleStubbedResponse().json in Resources */,
+				A31D52C929ACF970005D4EF5 /* test_twoStubbedResponsesToTheSameEndpoint().json in Resources */,
+				8154878A29A697F70044AF9B /* test_singleResponse().json in Resources */,
 				8154875F29A696F10044AF9B /* Assets.xcassets in Resources */,
+				A31D52CD29ACFAFE005D4EF5 /* test_twoStubbedResponsesToTwoDifferentEndpoints().json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -229,7 +244,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		81465BEB29A7B1D300BD6E04 /* Strip Stubbie Stub JSON */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			files = (
 			);
 			inputFileListPaths = (
@@ -241,7 +256,7 @@
 			);
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nset -e\n\necho \"is running is ${XCUI_IS_RUNNING}\"\n\nif [ \"${CONFIGURATION}\" = \"Release\" ]; then\n    rm \"${BUILT_PRODUCTS_DIR}/StubbieSampler.app/test_mockedResponse_array().json\"\n    echo \"Release build, clearing test JSON files from build.\"\nfi\n";
 		};
@@ -264,6 +279,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8154877729A696F20044AF9B /* StubbieSamplerUITests.swift in Sources */,
+				A31D52CB29ACFA96005D4EF5 /* XCUIElement+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -467,6 +483,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = F4FKZMR5MG;
 				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.marksandspencer.StubbieSamplerUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -485,6 +502,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = F4FKZMR5MG;
 				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.marksandspencer.StubbieSamplerUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";

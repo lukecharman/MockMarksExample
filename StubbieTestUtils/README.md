@@ -1,3 +1,3 @@
 # StubbieTestUtils
 
-A description of this package.
+This package contains a small test utility class which Stubbie tests should subclass. 
