@@ -18,12 +18,33 @@ struct StubbieLoader {
   ///   - bundle: The bundle in which to look for JSON stubs. Defaults to the app's main bundle.
   ///
   /// - Returns: An optional array of `StubbieMockedResponse`s, read sequentially from the named JSON.
-  ///
-  static func loadJSON(named name: String, in bundle: Bundle = .main) -> [Response]? {
-    guard let bundleURL = Bundle.main.url(forResource: name, withExtension: "json") else { return nil }
-    guard let data = try? Data(contentsOf: bundleURL) else { return nil }
-    guard let json = try? JSONSerialization.jsonObject(with: data) as? [[AnyHashable: Any]] else { return nil }
+  func loadJSON(named name: String, in bundle: Bundle = .main) -> [Response]? {
+    guard let data = loadJSONData(from: bundle, named: name) else {
+      return nil
+    }
+    guard let json = loadJSON(from: data) else {
+      return nil
+    }
 
+    return parseStubs(from: json)
+  }
+}
+
+extension StubbieLoader {
+
+  func loadJSONData(from bundle: Bundle, named name: String) -> Data? {
+    guard let bundleURL = bundle.url(forResource: name, withExtension: "json") else {
+      return nil
+    }
+
+    return try? Data(contentsOf: bundleURL)
+  }
+
+  func loadJSON(from data: Data) -> [[AnyHashable: Any]]? {
+    try? JSONSerialization.jsonObject(with: data) as? [[AnyHashable: Any]]
+  }
+
+  func parseStubs(from json: [[AnyHashable: Any]]) -> [Response] {
     var stubs = [Response]()
 
     for i in 0..<json.count {
