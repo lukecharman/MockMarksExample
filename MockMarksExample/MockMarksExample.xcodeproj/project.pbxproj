@@ -11,8 +11,6 @@
 		A3AEB54129B0CFD300F46D4E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3AEB54029B0CFD300F46D4E /* AppDelegate.swift */; };
 		A3AEB54329B0CFD300F46D4E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3AEB54229B0CFD300F46D4E /* SceneDelegate.swift */; };
 		A3AEB54529B0CFD300F46D4E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3AEB54429B0CFD300F46D4E /* ViewController.swift */; };
-		A3AEB54A29B0CFD400F46D4E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A3AEB54929B0CFD400F46D4E /* Assets.xcassets */; };
-		A3AEB54D29B0CFD400F46D4E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A3AEB54B29B0CFD400F46D4E /* LaunchScreen.storyboard */; };
 		A3AEB57229B0CFF200F46D4E /* MockMarks in Frameworks */ = {isa = PBXBuildFile; productRef = A3AEB57129B0CFF200F46D4E /* MockMarks */; };
 		A3AEB57429B0CFFC00F46D4E /* MockMarks+XCUI in Frameworks */ = {isa = PBXBuildFile; productRef = A3AEB57329B0CFFC00F46D4E /* MockMarks+XCUI */; };
 		A3AEB57629B0CFFF00F46D4E /* MockMarks in Frameworks */ = {isa = PBXBuildFile; productRef = A3AEB57529B0CFFF00F46D4E /* MockMarks */; };
@@ -40,8 +38,6 @@
 		A3AEB54029B0CFD300F46D4E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A3AEB54229B0CFD300F46D4E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		A3AEB54429B0CFD300F46D4E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		A3AEB54929B0CFD400F46D4E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		A3AEB54C29B0CFD400F46D4E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A3AEB54E29B0CFD400F46D4E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A3AEB55D29B0CFD400F46D4E /* MockMarksExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MockMarksExampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3AEB57729B0D02300F46D4E /* XCUIElement+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "XCUIElement+Extensions.swift"; sourceTree = "<group>"; };
@@ -100,8 +96,6 @@
 				A3AEB54229B0CFD300F46D4E /* SceneDelegate.swift */,
 				A3AEB54429B0CFD300F46D4E /* ViewController.swift */,
 				A3AEB57B29B0D09300F46D4E /* ViewModel.swift */,
-				A3AEB54929B0CFD400F46D4E /* Assets.xcassets */,
-				A3AEB54B29B0CFD400F46D4E /* LaunchScreen.storyboard */,
 				A3AEB54E29B0CFD400F46D4E /* Info.plist */,
 			);
 			path = MockMarksExample;
@@ -223,9 +217,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A3AEB54D29B0CFD400F46D4E /* LaunchScreen.storyboard in Resources */,
 				A3AEB58629B0D0AC00F46D4E /* test_singleStubbedResponse().json in Resources */,
-				A3AEB54A29B0CFD400F46D4E /* Assets.xcassets in Resources */,
 				A3AEB58429B0D0AC00F46D4E /* test_singleResponse().json in Resources */,
 				A3AEB58729B0D0AC00F46D4E /* test_twoStubbedResponsesToTheSameEndpoint().json in Resources */,
 				A3AEB58529B0D0AC00F46D4E /* test_twoStubbedResponsesToTwoDifferentEndpoints().json in Resources */,
@@ -271,17 +263,6 @@
 			targetProxy = A3AEB55E29B0CFD400F46D4E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		A3AEB54B29B0CFD400F46D4E /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				A3AEB54C29B0CFD400F46D4E /* Base */,
-			);
-			name = LaunchScreen.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		A3AEB56529B0CFD400F46D4E /* Debug */ = {
