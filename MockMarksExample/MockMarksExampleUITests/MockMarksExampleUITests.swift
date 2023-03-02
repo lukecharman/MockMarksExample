@@ -1,8 +1,8 @@
 import Foundation
 import XCTest
-import MockMarksTestUtils
+import MockMarks_XCUI
 
-class MockMarksSamplerUITests: MockMarksUITestCase {
+class MockMarksExampleUITests: MockMarksUITestCase {
 
   func test_singleResponse() {
     launchApp(withStubsNamed: #function)
@@ -35,7 +35,7 @@ class MockMarksSamplerUITests: MockMarksUITestCase {
   }
 }
 
-private extension MockMarksSamplerUITests {
+private extension MockMarksExampleUITests {
 
   var loadWordButton: XCUIElement {
     app.buttons["Load_Word_Button"]
