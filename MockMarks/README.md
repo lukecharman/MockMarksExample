@@ -1,5 +1,10 @@
 # MockMarks
 
+## Still To Do
+* Recording tests.
+* Write some decent documentation.
+* Finish unit testing.
+
 ## What is MockMarks?
 
 MockMarks is a pair of Swift packages used to easily create local, stubbed responses to network calls made via `URLSession`. These are managed entirely within Xcode, and no HTTP server or other intermediary is required. Using MockMarks, you can:

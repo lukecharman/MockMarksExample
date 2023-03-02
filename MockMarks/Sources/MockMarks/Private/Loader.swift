@@ -24,6 +24,7 @@ extension MockMarks {
       guard let data = loadJSONData(from: bundle, named: name) else {
         return nil
       }
+
       guard let json = loadJSON(from: data) else {
         return nil
       }

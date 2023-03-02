@@ -16,6 +16,9 @@ let package = Package(
             dependencies: []),
         .testTarget(
             name: "MockMarksTests",
-            dependencies: ["MockMarks"]),
+            dependencies: ["MockMarks"],
+            resources: [
+              .process("Resources")
+            ]),
     ]
 )
