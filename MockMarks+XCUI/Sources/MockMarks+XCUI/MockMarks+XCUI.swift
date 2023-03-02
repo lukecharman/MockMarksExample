@@ -11,6 +11,8 @@ open class MockMarksUITestCase: XCTestCase {
 
     app = XCUIApplication()
     app.launchEnvironment["XCUI_IS_RUNNING"] = String(true)
+
+    launchApp(withStubsNamed: stubName)
   }
 
   override public func tearDown() {
@@ -25,5 +27,15 @@ open class MockMarksUITestCase: XCTestCase {
     }
 
     app.launch()
+  }
+}
+
+private extension MockMarksUITestCase {
+
+  var stubName: String {
+    name
+      .split(separator: " ")
+      .last!
+      .replacingOccurrences(of: "]", with: "")
   }
 }

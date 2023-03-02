@@ -5,19 +5,16 @@ import MockMarks_XCUI
 class MockMarksExampleUITests: MockMarksUITestCase {
 
   func test_singleResponse() {
-    launchApp(withStubsNamed: #function)
     XCTAssert(self.app.staticTexts["STUBBED"].waitForExistence(timeout: 5))
   }
 
   func test_singleStubbedResponse() {
-    launchApp(withStubsNamed: #function)
     XCTAssert(self.app.staticTexts["STUBBED"].waitForExistence(timeout: 5))
     loadWordButton.tap()
     XCTAssert(self.app.staticTexts["STUBBED"].waitForNonExistence(timeout: 5))
   }
 
   func test_twoStubbedResponsesToTheSameEndpoint() {
-    launchApp(withStubsNamed: #function)
     XCTAssert(self.app.staticTexts["STUBBED"].waitForExistence(timeout: 5))
     loadWordButton.tap()
     XCTAssert(self.app.staticTexts["STUBBED AGAIN"].waitForExistence(timeout: 5))
@@ -26,7 +23,6 @@ class MockMarksExampleUITests: MockMarksUITestCase {
   }
 
   func test_twoStubbedResponsesToTwoDifferentEndpoints() {
-    launchApp(withStubsNamed: #function)
     XCTAssert(self.app.staticTexts["STUBBED"].waitForExistence(timeout: 5))
     loadWordButton.tap()
     XCTAssert(self.app.staticTexts["STUBBED"].waitForNonExistence(timeout: 5))

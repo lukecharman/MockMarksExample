@@ -17,7 +17,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     // 1. If we're UI testing, do MockMarks's global setup.
     // 2. Set its session property to your app's URLSession instance.
     MockMarks.setUp()
-    MockMarks.session = MockMarks.Session(stubbing: .shared)
+    MockMarks.session = .init(stubbing: .shared)
 
     // 3. Use the MockMarks session if it's available in your app.
     let vm = ViewModel(urlSession: MockMarks.session ?? .shared)
