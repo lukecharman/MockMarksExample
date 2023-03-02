@@ -41,3 +41,18 @@ private extension MockMarksExampleUITests {
     app.buttons["Load_Language_Button"]
   }
 }
+
+private extension XCUIElement {
+
+  func waitForNonExistence(timeout: TimeInterval) -> Bool {
+    let timeStart = Date().timeIntervalSince1970
+
+    while (Date().timeIntervalSince1970 <= (timeStart + timeout)) {
+      if !exists {
+        return true
+      }
+    }
+
+    return false
+  }
+}
