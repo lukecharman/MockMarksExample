@@ -4,6 +4,11 @@ import XCTest
 
 final class MockMarksTests: XCTestCase {
 
+  override func setUp() {
+    super.setUp()
+    MockMarks.queue.queuedResponses.removeAll()
+  }
+
   func test_session_shouldBeStored() {
     let session = MockMarks.Session(stubbing: .shared)
     MockMarks.session = session
@@ -26,7 +31,26 @@ final class MockMarksTests: XCTestCase {
     }
   }
 
+  func test_setUp_shouldLoadJSON_whenPathProvided_andPathIsValid() {
+    let processInfo = MockProcessInfo()
+    processInfo.isRunningXCUI = true
+    MockMarks.setUp(processInfo: processInfo, bundle: .module)
+    XCTAssertFalse(MockMarks.queue.queuedResponses.isEmpty)
+  }
+
   var url: URL {
     URL(string: "A")!
+  }
+}
+
+class MockProcessInfo: ProcessInfo {
+  var didQueryInitialMockJSON = false
+  var isRunningXCUI = false
+
+  override var environment: [String: String] {
+    return [
+      "XCUI_INITIAL_MOCK_JSON": "MockMarksTests",
+      "XCUI_IS_RUNNING": String(isRunningXCUI)
+    ]
   }
 }

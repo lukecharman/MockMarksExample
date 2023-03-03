@@ -37,11 +37,11 @@ public enum MockMarks {
   ///
   /// - Parameters:
   ///   - processInfo: An injectable instance of `ProcessInfo` used to check environment variables.
-  public static func setUp(processInfo: ProcessInfo = .processInfo) {
-    guard MockMarks.isXCUI else { return }
+  public static func setUp(processInfo: ProcessInfo = .processInfo, bundle: Bundle = .main) {
+    guard processInfo.environment["XCUI_IS_RUNNING"] == String(true) else { return }
 
     guard let initial = processInfo.environment[MockMarks.initialMockJSON] else { return }
-    guard let json = loader.loadJSON(named: initial) else { return }
+    guard let json = loader.loadJSON(named: initial, in: bundle) else { return }
 
     json.forEach {
       try? queue.queueValidResponse(with: $0.stub, from: $0.url)
