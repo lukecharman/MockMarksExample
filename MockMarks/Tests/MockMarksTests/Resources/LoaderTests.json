@@ -1,8 +1,12 @@
 [
   {
     "url": "https://testing-some-json",
-    "stub": [
-      "STUBBED OR WHATEVER"
-    ]
+    "response": {
+      "json": [
+        "STUBBED OR WHATEVER"
+      ],
+      "responseCode": 200,
+      "error": {}
+    }
   }
 ]

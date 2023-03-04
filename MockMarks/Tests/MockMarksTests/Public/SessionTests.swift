@@ -87,7 +87,7 @@ private class MockSession: URLSession {
 }
 
 private class MockDataTask: MockMarks.DataTask {
-  override init(stubbing task: URLSessionDataTask, completionHandler: @escaping MockMarks.CompletionHandler) {
+  override init(stubbing task: URLSessionDataTask, completionHandler: @escaping MockMarks.DataTask.CompletionHandler) {
     super.init(stubbing: task, completionHandler: completionHandler)
     completionHandler(("Test".data(using: .utf16)!, nil, nil))
   }

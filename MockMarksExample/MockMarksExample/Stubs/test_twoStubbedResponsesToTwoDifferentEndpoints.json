@@ -1,13 +1,21 @@
 [
   {
     "url": "https://random-word-api.herokuapp.com/word",
-    "stub": [
-      "STUBBED"
-    ]
+    "response": {
+      "json": [
+        "STUBBED"
+      ],
+      "responseCode": 200,
+      "error": {}
+    }
   }, {
     "url": "https://random-word-api.herokuapp.com/languages",
-    "stub": [
-      "STUBBED TOO"
-    ]
+    "response": {
+      "json": [
+        "STUBBED TOO"
+      ],
+      "responseCode": 200,
+      "error": {}
+    }
   }
 ]

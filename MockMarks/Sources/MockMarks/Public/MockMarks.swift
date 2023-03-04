@@ -1,3 +1,15 @@
+/**
+ Recording:
+ - Enable via the app, needs a method on MockMarks.
+ - When a call is made, don't serve a mock. Instead, capture the response in the Session.
+ - Need to change the JSON structure "stub" is not granular enough.
+ - How should Error be represented in the JSON? Just a localized description? Anything more?
+ - Once this is done, update all the examples.
+ - Record the response, make JSON, write it to a file somewhere somehow.
+ - Fail the mock superclass for any test by default if record mode is on. Can do this in setUp in the superclass.
+ - Write some examples and tests that return different status codes and errors.
+**/
+
 import Foundation
 
 /// The `MockMarks` enum is the core of the library, and allows you to queue stubbed responses
@@ -6,6 +18,9 @@ public enum MockMarks {
 
   /// A `URLSession` set to this variable will have its scheduled data tasks checked for suitable stubs.
   public static var session: MockMarks.Session?
+
+  /// Used to toggle MockMarks' recording mode. In this mode, incoming calls through `session` will be recorded.
+  public static var isRecording: Bool = false
 
   /// Used to ascertain whether or not MockMarks is currently running within the context of a `MockMarksUITestCase`.
   public static var isXCUI: Bool {
@@ -27,7 +42,7 @@ public enum MockMarks {
   /// - Parameters:
   ///   - url: The url for which the next queued `response` will return.
   ///   - completion: A closure to be called with the queued response.
-  static func dispatchNextQueuedResponse(for url: URL, to completion: @escaping CompletionHandler) -> Bool {
+  static func dispatchNextQueuedResponse(for url: URL, to completion: @escaping DataTask.CompletionHandler) -> Bool {
     queue.dispatchNextQueuedResponse(for: url, to: completion)
   }
 
@@ -44,13 +59,7 @@ public enum MockMarks {
     guard let json = loader.loadJSON(named: initial, in: bundle) else { return }
 
     json.forEach {
-      try? queue.queueValidResponse(with: $0.stub, from: $0.url)
+      queue.queue(mockmark: MockMark(url: $0.url, response: $0.response))
     }
   }
-}
-
-/// Internal extensions used for cleaner-to-read code.
-extension MockMarks {
-  typealias Response = (Data?, URLResponse?, Error?)
-  typealias CompletionHandler = (Response) -> Void
 }

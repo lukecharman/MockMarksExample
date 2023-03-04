@@ -25,8 +25,9 @@ extension MockMarks {
 
     /// Begin executing the task. If a mocked response for this task is provided within MockMarks's queued responses, it will
     /// be passed to the `completionHandler`. If such a response is not provided, the superclass will handle the function.
+    /// We also need to either be running UI tests, or recording to proceed with the custom implementation.
     override func resume() {
-      guard let url = task.currentRequest?.url, MockMarks.isXCUI else {
+      guard let url = task.currentRequest?.url, (MockMarks.isXCUI || MockMarks.isRecording) else {
         return task.resume()
       }
 
@@ -37,4 +38,9 @@ extension MockMarks {
       }
     }
   }
+}
+
+/// Internal extensions used for cleaner-to-read code.
+extension MockMarks.DataTask {
+  typealias CompletionHandler = ((Data?, URLResponse?, Error?)) -> Void
 }

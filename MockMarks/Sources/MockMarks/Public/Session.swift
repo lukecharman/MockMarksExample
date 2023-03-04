@@ -30,10 +30,14 @@ extension MockMarks {
       with request: URLRequest,
       completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void
     ) -> URLSessionDataTask {
-      MockMarks.DataTask(
-        stubbing: urlSession.dataTask(with: request, completionHandler: completionHandler),
-        completionHandler: completionHandler
-      )
+      let superTask = urlSession.dataTask(with: request, completionHandler: { data, response, error in
+        if MockMarks.isRecording, let url = request.url {
+          Recorder.record(url: url, data: data, response: response, error: error)
+        }
+        completionHandler(data, response, error)
+      })
+
+      return DataTask(stubbing: superTask, completionHandler: completionHandler)
     }
 
     /// Create a `MockMarksURLSessionDataTask` (as a standard `URLSessionDataTask`)
@@ -48,8 +52,13 @@ extension MockMarks {
       with url: URL,
       completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void
     ) -> URLSessionDataTask {
-      MockMarks.DataTask(
-        stubbing: urlSession.dataTask(with: url, completionHandler: completionHandler),
+      DataTask(
+        stubbing: urlSession.dataTask(with: url, completionHandler: { data, response, error in
+          if MockMarks.isRecording {
+            Recorder.record(url: url, data: data, response: response, error: error)
+          }
+          completionHandler(data, response, error)
+        }),
         completionHandler: completionHandler
       )
     }

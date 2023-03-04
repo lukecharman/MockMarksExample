@@ -2,12 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:MockMarksExample/MockMarksExample.xcodeproj">
+      location = "group:MockMarks">
    </FileRef>
    <FileRef
       location = "group:MockMarks+XCUI">
    </FileRef>
    <FileRef
-      location = "group:MockMarks">
+      location = "group:MockMarksExample/MockMarksExample.xcodeproj">
    </FileRef>
 </Workspace>

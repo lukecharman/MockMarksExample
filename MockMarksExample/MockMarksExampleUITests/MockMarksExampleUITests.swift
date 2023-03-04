@@ -5,29 +5,29 @@ import MockMarks_XCUI
 class MockMarksExampleUITests: MockMarksUITestCase {
 
   func test_singleResponse() {
-    XCTAssert(self.app.staticTexts["STUBBED"].waitForExistence(timeout: 5))
+    XCTAssert(stubbedText.waitForExistence(timeout: 1))
   }
 
   func test_singleStubbedResponse() {
-    XCTAssert(self.app.staticTexts["STUBBED"].waitForExistence(timeout: 5))
+    XCTAssert(stubbedText.waitForExistence(timeout: 1))
     loadWordButton.tap()
-    XCTAssert(self.app.staticTexts["STUBBED"].waitForNonExistence(timeout: 5))
+    XCTAssert(stubbedText.waitForNonExistence(timeout: 1))
   }
 
   func test_twoStubbedResponsesToTheSameEndpoint() {
-    XCTAssert(self.app.staticTexts["STUBBED"].waitForExistence(timeout: 5))
+    XCTAssert(stubbedText.waitForExistence(timeout: 1))
     loadWordButton.tap()
-    XCTAssert(self.app.staticTexts["STUBBED AGAIN"].waitForExistence(timeout: 5))
+    XCTAssert(stubbedAgainText.waitForExistence(timeout: 1))
     loadWordButton.tap()
-    XCTAssert(self.app.staticTexts["STUBBED AGAIN"].waitForNonExistence(timeout: 5))
+    XCTAssert(stubbedAgainText.waitForNonExistence(timeout: 1))
   }
 
   func test_twoStubbedResponsesToTwoDifferentEndpoints() {
-    XCTAssert(self.app.staticTexts["STUBBED"].waitForExistence(timeout: 5))
+    XCTAssert(stubbedText.waitForExistence(timeout: 1))
     loadWordButton.tap()
-    XCTAssert(self.app.staticTexts["STUBBED"].waitForNonExistence(timeout: 5))
+    XCTAssert(stubbedText.waitForNonExistence(timeout: 1))
     loadLanguageButton.tap()
-    XCTAssert(self.app.staticTexts["STUBBED TOO"].waitForNonExistence(timeout: 5))
+    XCTAssert(stubbedTooText.waitForNonExistence(timeout: 1))
   }
 }
 
@@ -39,6 +39,18 @@ private extension MockMarksExampleUITests {
 
   var loadLanguageButton: XCUIElement {
     app.buttons["Load_Language_Button"]
+  }
+
+  var stubbedText: XCUIElement {
+    app.staticTexts["STUBBED"]
+  }
+
+  var stubbedTooText: XCUIElement {
+    app.staticTexts["STUBBED TOO"]
+  }
+
+  var stubbedAgainText: XCUIElement {
+    app.staticTexts["STUBBED AGAIN"]
   }
 }
 

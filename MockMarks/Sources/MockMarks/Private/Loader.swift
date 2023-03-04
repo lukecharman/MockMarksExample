@@ -5,14 +5,6 @@ extension MockMarks {
   /// Used to load stubs from JSON files stored in the app bundle, and decode them.
   struct Loader {
 
-    /// A data structure representing a mocked response to a specific URL.
-    struct Response {
-      /// The URL to which queries will return the associated stub.
-      let url: URL
-      /// The stubbed data which calls to the other URL
-      let stub: Any
-    }
-
     /// Looks for a JSON file with the given name, and decodes its contents into an array of mocked responses.
     ///
     /// - Parameters:
@@ -20,8 +12,8 @@ extension MockMarks {
     ///   - bundle: The bundle in which to look for JSON stubs. Defaults to the app's main bundle.
     ///
     /// - Returns: An optional array of `MockMarksMockedResponse`s, read sequentially from the named JSON.
-    func loadJSON(named name: String, in bundle: Bundle = .main) -> [Response]? {
-      guard let data = loadJSONData(from: bundle, named: name) else {
+    func loadJSON(named name: String, in bundle: Bundle = .main) -> [MockMark]? {
+      guard let data = loadJSONData(named: name, in: bundle) else {
         return nil
       }
 
@@ -32,7 +24,14 @@ extension MockMarks {
       return parseStubs(from: json)
     }
 
-    func loadJSONData(from bundle: Bundle, named name: String) -> Data? {
+    /// Load JSON data from the given bundle of the given name.
+    ///
+    /// - Parameters:
+    ///   - name: The filename to look for in the app bundle which contains ordered, stubbed responses.
+    ///   - bundle: The bundle in which to look for JSON stubs. Defaults to the app's main bundle.
+    ///
+    /// - Returns: An optional instance of `Data` containing the contents of the named file.
+    func loadJSONData(named name: String, in bundle: Bundle = .main) -> Data? {
       guard let bundleURL = bundle.url(forResource: name, withExtension: "json") else {
         return nil
       }
@@ -40,17 +39,45 @@ extension MockMarks {
       return try? Data(contentsOf: bundleURL)
     }
 
+    /// Load JSON data structure from the given `Data` object.
+    ///
+    /// - Parameters:
+    ///   - data: The data to be converted to JSON.
+    ///
+    /// - Returns: An optional array of JSON dictionaries, each representing a stub, read sequentially from the named JSON.
     func loadJSON(from data: Data) -> [[AnyHashable: Any]]? {
       try? JSONSerialization.jsonObject(with: data) as? [[AnyHashable: Any]]
     }
 
-    func parseStubs(from json: [[AnyHashable: Any]]) -> [Response] {
-      var stubs = [Response]()
+    /// Parse stub JSON into `MockMark` objects.
+    ///
+    /// - Parameters:
+    ///   - json: The JSON to be read and parsed.
+    ///
+    /// - Returns: An array of `MockMark`s, each representing a stub.
+    func parseStubs(from json: [[AnyHashable: Any]]) -> [MockMark] {
+      var stubs = [MockMark]()
 
       for i in 0..<json.count {
-        if let string = json[i]["url"] as? String, let stub = json[i]["stub"], let url = URL(string: string) {
-          stubs.append(Response(url: url, stub: stub))
+        guard let string = json[i]["url"] as? String else {
+          continue
         }
+
+        guard let url = URL(string: string) else {
+          continue
+        }
+
+        guard let response = json[i]["response"] as? [AnyHashable: Any] else {
+          continue
+        }
+
+        let mockMarkResponse = MockMark.Response(
+          data: try! JSONSerialization.data(withJSONObject: response["json"]!),
+          statusCode: response["statusCode"] as? Int,
+          error: nil
+        )
+
+        stubs.append(MockMark(url: url, response: mockMarkResponse))
       }
 
       return stubs

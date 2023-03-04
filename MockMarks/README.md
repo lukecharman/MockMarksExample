@@ -3,7 +3,6 @@
 ## Still To Do
 * Recording tests.
 * Write some decent documentation.
-* Finish unit testing.
 
 ## What is MockMarks?
 

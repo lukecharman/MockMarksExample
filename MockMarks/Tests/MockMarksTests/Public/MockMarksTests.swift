@@ -24,7 +24,11 @@ final class MockMarksTests: XCTestCase {
   }
 
   func test_dispatchNextQueuedResponse_shouldCallCompletion() {
-    try! MockMarks.queue.queueValidResponse(with: ["A": "B"], from: url)
+    let data = try! JSONSerialization.data(withJSONObject: ["A": "B"])
+    let response = MockMark.Response(data: data, statusCode: nil, error: nil)
+    let mockmark = MockMark(url: url, response: response)
+
+    try! MockMarks.queue.queue(mockmark: mockmark)
     _ = MockMarks.dispatchNextQueuedResponse(for: url) { data, _, _ in
       let json = try! JSONSerialization.jsonObject(with: data!, options: []) as! [AnyHashable: Any]
       XCTAssertEqual(json["A"] as! String, "B")

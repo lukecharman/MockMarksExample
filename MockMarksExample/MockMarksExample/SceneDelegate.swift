@@ -20,10 +20,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     // 2. Set its session property to your app's URLSession instance.
     MockMarks.session = .init(stubbing: .shared)
 
-    // 3. Use the MockMarks session if it's available in your app.
+    // 3. If we want to record responses, turn record mode on.
+    MockMarks.isRecording = true
+
+    // 4. Use the MockMarks session if it's available in your app.
     let vm = ViewModel(urlSession: MockMarks.session ?? .shared)
 
-    // 4. Let's get going!
+    // 5. Let's get going!
     window.rootViewController = ViewController(viewModel: vm)
     window.makeKeyAndVisible()
   }
