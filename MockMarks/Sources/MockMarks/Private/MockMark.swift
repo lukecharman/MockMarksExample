@@ -30,4 +30,24 @@ struct MockMark: Hashable {
       return try? JSONSerialization.jsonObject(with: data)
     }
   }
+
+  var asJSON: [AnyHashable: Any] {
+    var json = [AnyHashable: Any]()
+
+    json["url"] = url
+
+    var mock = [AnyHashable: Any]()
+
+    if let data = response.data {
+      mock["data"] = data
+    }
+
+    if let code = response.urlResponse?.statusCode {
+      mock["responseCode"] = code
+    }
+
+    json["mock"] = mock
+
+    return json
+  }
 }
