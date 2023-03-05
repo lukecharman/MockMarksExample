@@ -20,15 +20,11 @@ struct MockMark: Hashable {
   struct Response {
     /// The data returned.
     let data: Data?
-    /// The HTTP status code of the stubbed response.
-    let statusCode: Int?
+    /// The HTTP URL response of the stub.
+    let urlResponse: HTTPURLResponse?
     /// A dictionary containing error information that the stub can return if present.
-    let error: Error?
-
-    func httpResponse(to url: URL) -> HTTPURLResponse? {
-      HTTPURLResponse(url: url, statusCode: statusCode ?? 200, httpVersion: nil, headerFields: nil)
-    }
-
+    let error: [String: Any]?
+    /// The data converted to JSON.
     var json: Any? {
       guard let data else { return nil }
       return try? JSONSerialization.jsonObject(with: data)

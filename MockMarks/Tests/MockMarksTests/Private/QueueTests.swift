@@ -17,19 +17,19 @@ final class QueueTests: XCTestCase {
   }
 
   func test_queue_shouldCreateKey_whenItDoesNotExist() {
-    queue.queue(mockmark: MockMark(url: url, response: .init(data: nil, statusCode: nil, error: nil)))
+    queue.queue(mockmark: MockMark(url: url, response: .init(data: nil, urlResponse: nil, error: nil)))
     XCTAssertNotNil(queue.queuedResponses[url])
   }
 
   func test_queue_shouldSaveResponse() {
-    let response: MockMark.Response = .init(data: testData1, statusCode: nil, error: nil)
+    let response: MockMark.Response = .init(data: testData1, urlResponse: nil, error: nil)
     queue.queue(mockmark: MockMark(url: url, response: response))
     XCTAssertEqual(queue.queuedResponses[url]?.first?.data, testData1)
   }
 
   func test_queue_shouldInsertResponseAtPositionZero() {
-    let response1: MockMark.Response = .init(data: testData1, statusCode: nil, error: nil)
-    let response2: MockMark.Response = .init(data: testData2, statusCode: nil, error: nil)
+    let response1: MockMark.Response = .init(data: testData1, urlResponse: nil, error: nil)
+    let response2: MockMark.Response = .init(data: testData2, urlResponse: nil, error: nil)
     queue.queue(mockmark: MockMark(url: url, response: response1))
     queue.queue(mockmark: MockMark(url: url, response: response2))
     XCTAssertEqual(queue.queuedResponses[url]?[0].data, testData2)
@@ -37,20 +37,24 @@ final class QueueTests: XCTestCase {
   }
 
   func test_queue_shouldPreserveStatusCode() {
-    let response: MockMark.Response = .init(data: nil, statusCode: urlResponse.statusCode, error: nil)
+    let response: MockMark.Response = .init(data: nil, urlResponse: urlResponse, error: nil)
     queue.queue(mockmark: MockMark(url: url, response: response))
 
-    let statusCode = queue.queuedResponses[url]?.first?.statusCode
+    let statusCode = queue.queuedResponses[url]?.first?.urlResponse?.statusCode
     XCTAssertEqual(url, urlResponse.url)
     XCTAssertEqual(statusCode, urlResponse.statusCode)
   }
 
   func test_queue_shouldPreserveError() {
-    let response: MockMark.Response = .init(data: nil, statusCode: nil, error: error)
+    let response: MockMark.Response = .init(data: nil, urlResponse: nil, error: error)
     queue.queue(mockmark: MockMark(url: url, response: response))
 
-    let savedError = queue.queuedResponses[url]?.first?.error
-    XCTAssertEqual(savedError?.localizedDescription, error.localizedDescription)
+    guard let savedError = queue.queuedResponses[url]?.first?.error else {
+      return XCTFail(#function)
+    }
+
+    XCTAssertEqual(savedError["domain"] as? String, error["domain"] as? String)
+    XCTAssertEqual(savedError["code"] as? Int, error["code"] as? Int)
   }
 
   func test_dispatchNextQueuedResponse_shouldReturnFalse_whenURLHasNoQueuedResponses() {
@@ -84,7 +88,7 @@ final class QueueTests: XCTestCase {
   }
 
   var emptyResponse: MockMark.Response {
-    MockMark.Response(data: nil, statusCode: nil, error: nil)
+    MockMark.Response(data: nil, urlResponse: nil, error: nil)
   }
 
   var testData1: Data {
@@ -99,15 +103,10 @@ final class QueueTests: XCTestCase {
     HTTPURLResponse(url: url, statusCode: 123, httpVersion: nil, headerFields: nil)!
   }
 
-  var error: Error {
-    TestError.forTesting
-  }
-
-  private enum TestError: Error {
-    case forTesting
-
-    var localizedDescription: String {
-      "Testing"
-    }
+  var error: [String: Any] {
+    [
+      "domain": NSURLErrorDomain,
+      "code": NSURLErrorNotConnectedToInternet
+    ]
   }
 }

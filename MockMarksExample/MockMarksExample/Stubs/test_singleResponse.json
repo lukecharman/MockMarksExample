@@ -1,11 +1,13 @@
 [
   {
     "url": "https://random-word-api.herokuapp.com/word",
-    "response": {
+    "mock": {
       "json": [
         "STUBBED"
       ],
       "responseCode": 200,
+      "httpVersion": null,
+      "headerFields": null,
       "error": {}
     }
   }

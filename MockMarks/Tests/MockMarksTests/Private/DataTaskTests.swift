@@ -42,7 +42,7 @@ final class DataTaskTests: XCTestCase {
 
     let url = URL(string: "A")!
     let data = try! JSONSerialization.data(withJSONObject: ["A": "B"])
-    let response = MockMark.Response(data: data, statusCode: nil, error: nil)
+    let response = MockMark.Response(data: data, urlResponse: nil, error: nil)
     MockMarks.queue.queue(mockmark: MockMark(url: URL(string: "A")!, response: response))
 
     let task = MockURLSessionDataTask()

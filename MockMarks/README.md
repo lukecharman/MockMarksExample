@@ -2,7 +2,8 @@
 
 ## Still To Do
 * Recording tests.
-* Write some decent documentation.
+* Decide on how error is represented in the json.
+* Write some decent documentation including "What can i mock?" list of things in the JSON that are acceptable
 
 ## What is MockMarks?
 

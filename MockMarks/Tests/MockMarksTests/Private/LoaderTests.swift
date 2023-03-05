@@ -47,7 +47,7 @@ final class LoaderTests: XCTestCase {
 
     let json = try! JSONSerialization.jsonObject(with: data!) as! [[AnyHashable: Any]]
     XCTAssertEqual(json[0]["url"] as! String, "https://testing-some-json")
-    XCTAssertEqual(((json[0]["response"] as! [AnyHashable: Any])["json"] as! [String])[0], "STUBBED OR WHATEVER")
+    XCTAssertEqual(((json[0]["mock"] as! [AnyHashable: Any])["json"] as! [String])[0], "STUBBED OR WHATEVER")
   }
 
   func test_loadJSONFromData_shouldParseJSONArrayOfDictsCorrectly() {
@@ -60,16 +60,16 @@ final class LoaderTests: XCTestCase {
     let secondURL = (goodJSON[0]["url"] as! String)
     XCTAssertEqual(firstURL, secondURL)
 
-    let firstStub = (result[0]["response"] as! [AnyHashable: Any])
-    let secondStub = (goodJSON[0]["response"] as! [AnyHashable: Any])
+    let firstStub = (result[0]["mock"] as! [AnyHashable: Any])
+    let secondStub = (goodJSON[0]["mock"] as! [AnyHashable: Any])
     XCTAssertEqual(firstStub["json"] as! [String: String], secondStub["json"] as! [String: String])
 
     let thirdURL = (result[1]["url"] as! String)
     let fourthURL = (goodJSON[1]["url"] as! String)
     XCTAssertEqual(thirdURL, fourthURL)
 
-    let thirdStub = (result[1]["response"] as! [AnyHashable: Any])
-    let fourthStub = (goodJSON[1]["response"] as! [AnyHashable: Any])
+    let thirdStub = (result[1]["mock"] as! [AnyHashable: Any])
+    let fourthStub = (goodJSON[1]["mock"] as! [AnyHashable: Any])
     XCTAssertEqual(thirdStub["json"] as! [String: String], fourthStub["json"] as! [String: String])
   }
 
@@ -98,12 +98,12 @@ final class LoaderTests: XCTestCase {
     [
       [
         "url": "https://test.com",
-        "response": [
+        "mock": [
           "json": ["A": "B"]
         ]
       ], [
         "url": "https://again.com",
-        "response": [
+        "mock": [
           "json": ["C": "D"]
         ]
       ]
@@ -114,12 +114,12 @@ final class LoaderTests: XCTestCase {
     [
       [
         "url": "https://test.com",
-        "response": [
+        "mock": [
           "json": ["A": "B"]
         ]
       ], [
         "urllo": "https://again.com",
-        "response": [
+        "mock": [
           "jsondle": ["C": "D"]
         ]
       ]

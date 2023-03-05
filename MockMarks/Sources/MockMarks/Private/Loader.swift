@@ -67,13 +67,18 @@ extension MockMarks {
           continue
         }
 
-        guard let response = json[i]["response"] as? [AnyHashable: Any] else {
+        guard let response = json[i]["mock"] as? [AnyHashable: Any] else {
           continue
         }
 
         let mockMarkResponse = MockMark.Response(
           data: try! JSONSerialization.data(withJSONObject: response["json"]!),
-          statusCode: response["statusCode"] as? Int,
+          urlResponse: HTTPURLResponse(
+            url: url,
+            statusCode: response["statusCode"] as? Int ?? 200,
+            httpVersion: nil,
+            headerFields: nil
+          ),
           error: nil
         )
 
