@@ -20,9 +20,16 @@ public enum MockMarks {
   public static var session: MockMarks.Session?
 
   /// Used to toggle MockMarks' recording mode. In this mode, incoming calls through `session` will be recorded.
-  public static var isRecording: Bool = false
+  static var isRecording: Bool = false
 
-  public static var recordingsURL: URL?
+  /// The location to which recordings should be saved.
+  static var recordingsURL: URL?
+
+  /// Enable recording mode for stubbed responses, and provide a URL to which to write those stubs.
+  public static func setRecording(to url: URL) {
+    recordingsURL = url
+    isRecording = true
+  }
 
   /// Used to ascertain whether or not MockMarks is currently running within the context of a `MockMarksUITestCase`.
   public static var isXCUI: Bool {
@@ -36,7 +43,7 @@ public enum MockMarks {
   private static var loader: Loader = Loader()
 
   /// Used to read the filename of a stub file, provided by the individual test case.
-  private static let initialMockJSON = "XCUI_INITIAL_MOCK_JSON"
+  private static let initialMockJSON = "XCUI_MOCK_NAME"
 
   /// Dispatches the next queued response for the provided URL. Checks the queued response array for responses
   /// matching the given URL, and returns and removes the most recently added.
@@ -55,7 +62,9 @@ public enum MockMarks {
   /// - Parameters:
   ///   - processInfo: An injectable instance of `ProcessInfo` used to check environment variables.
   public static func setUp(processInfo: ProcessInfo = .processInfo, bundle: Bundle = .main) {
-    guard processInfo.environment["XCUI_IS_RUNNING"] == String(true) else { return }
+    guard processInfo.environment["XCUI_IS_RUNNING"] == String(true) else {
+      return
+    }
 
     guard let initial = processInfo.environment[MockMarks.initialMockJSON] else { return }
     guard let json = loader.loadJSON(named: initial, in: bundle) else { return }

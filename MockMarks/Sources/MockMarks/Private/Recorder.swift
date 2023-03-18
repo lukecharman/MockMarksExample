@@ -20,14 +20,12 @@ struct Recorder {
   }
 
   static func writeRecordings() {
-    guard let name = ProcessInfo.processInfo.environment["XCUI_RECORDING_TEST_NAME"] else {
+    guard let name = ProcessInfo.processInfo.environment["XCUI_STUB_NAME"] else {
       return
     }
 
-    // Need a way to pass the app's root path + \Stubs\ here.
-
     guard let fileUrl = MockMarks.recordingsURL else {
-      fatalError()
+      return
     }
 
     var mockDirectoryUrl = fileUrl.deletingLastPathComponent().appendingPathComponent("Stubs")

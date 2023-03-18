@@ -7,6 +7,7 @@ struct MockMark: Hashable {
   /// The stubbed response which will be returned to the `Response`'s `url`.
   let response: Response
 
+  /// Hashable conformance.
   func hash(into hasher: inout Hasher) {
     hasher.combine(url)
   }

@@ -54,9 +54,9 @@ extension MockMarks {
     ) -> URLSessionDataTask {
       DataTask(
         stubbing: urlSession.dataTask(with: url, completionHandler: { data, response, error in
-//          if MockMarks.isRecording {
+          if MockMarks.isRecording {
             Recorder.record(url: url, data: data, response: response, error: error)
-//          }
+          }
           completionHandler(data, response, error)
         }),
         completionHandler: completionHandler

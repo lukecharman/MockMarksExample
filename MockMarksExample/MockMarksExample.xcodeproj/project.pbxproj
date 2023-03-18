@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A32166F429C648C300CFB5D4 /* test_singleResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = A32166F029C648C300CFB5D4 /* test_singleResponse.json */; };
+		A32166F529C648C300CFB5D4 /* test_twoStubbedResponsesToTheSameEndpoint.json in Resources */ = {isa = PBXBuildFile; fileRef = A32166F129C648C300CFB5D4 /* test_twoStubbedResponsesToTheSameEndpoint.json */; };
+		A32166F629C648C300CFB5D4 /* test_singleStubbedResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = A32166F229C648C300CFB5D4 /* test_singleStubbedResponse.json */; };
+		A32166F729C648C300CFB5D4 /* test_twoStubbedResponsesToTwoDifferentEndpoints.json in Resources */ = {isa = PBXBuildFile; fileRef = A32166F329C648C300CFB5D4 /* test_twoStubbedResponsesToTwoDifferentEndpoints.json */; };
 		A36252A629B0D8110047B0B2 /* MockMarksExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36252A529B0D8110047B0B2 /* MockMarksExampleUITests.swift */; };
 		A3AEB54129B0CFD300F46D4E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3AEB54029B0CFD300F46D4E /* AppDelegate.swift */; };
 		A3AEB54329B0CFD300F46D4E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3AEB54229B0CFD300F46D4E /* SceneDelegate.swift */; };
@@ -15,10 +19,6 @@
 		A3AEB57429B0CFFC00F46D4E /* MockMarks+XCUI in Frameworks */ = {isa = PBXBuildFile; productRef = A3AEB57329B0CFFC00F46D4E /* MockMarks+XCUI */; settings = {ATTRIBUTES = (Required, ); }; };
 		A3AEB57629B0CFFF00F46D4E /* MockMarks in Frameworks */ = {isa = PBXBuildFile; productRef = A3AEB57529B0CFFF00F46D4E /* MockMarks */; };
 		A3AEB57C29B0D09300F46D4E /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3AEB57B29B0D09300F46D4E /* ViewModel.swift */; };
-		A3AEB58429B0D0AC00F46D4E /* test_singleResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = A3AEB58029B0D0AC00F46D4E /* test_singleResponse.json */; };
-		A3AEB58529B0D0AC00F46D4E /* test_twoStubbedResponsesToTwoDifferentEndpoints.json in Resources */ = {isa = PBXBuildFile; fileRef = A3AEB58129B0D0AC00F46D4E /* test_twoStubbedResponsesToTwoDifferentEndpoints.json */; };
-		A3AEB58629B0D0AC00F46D4E /* test_singleStubbedResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = A3AEB58229B0D0AC00F46D4E /* test_singleStubbedResponse.json */; };
-		A3AEB58729B0D0AC00F46D4E /* test_twoStubbedResponsesToTheSameEndpoint.json in Resources */ = {isa = PBXBuildFile; fileRef = A3AEB58329B0D0AC00F46D4E /* test_twoStubbedResponsesToTheSameEndpoint.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,6 +32,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A32166F029C648C300CFB5D4 /* test_singleResponse.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = test_singleResponse.json; sourceTree = "<group>"; };
+		A32166F129C648C300CFB5D4 /* test_twoStubbedResponsesToTheSameEndpoint.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = test_twoStubbedResponsesToTheSameEndpoint.json; sourceTree = "<group>"; };
+		A32166F229C648C300CFB5D4 /* test_singleStubbedResponse.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = test_singleStubbedResponse.json; sourceTree = "<group>"; };
+		A32166F329C648C300CFB5D4 /* test_twoStubbedResponsesToTwoDifferentEndpoints.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = test_twoStubbedResponsesToTwoDifferentEndpoints.json; sourceTree = "<group>"; };
 		A36252A529B0D8110047B0B2 /* MockMarksExampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMarksExampleUITests.swift; sourceTree = "<group>"; };
 		A3AEB53D29B0CFD300F46D4E /* MockMarksExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MockMarksExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3AEB54029B0CFD300F46D4E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -40,10 +44,6 @@
 		A3AEB54E29B0CFD400F46D4E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A3AEB55D29B0CFD400F46D4E /* MockMarksExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MockMarksExampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A3AEB57B29B0D09300F46D4E /* ViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
-		A3AEB58029B0D0AC00F46D4E /* test_singleResponse.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = test_singleResponse.json; sourceTree = "<group>"; };
-		A3AEB58129B0D0AC00F46D4E /* test_twoStubbedResponsesToTwoDifferentEndpoints.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = test_twoStubbedResponsesToTwoDifferentEndpoints.json; sourceTree = "<group>"; };
-		A3AEB58229B0D0AC00F46D4E /* test_singleStubbedResponse.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = test_singleStubbedResponse.json; sourceTree = "<group>"; };
-		A3AEB58329B0D0AC00F46D4E /* test_twoStubbedResponsesToTheSameEndpoint.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = test_twoStubbedResponsesToTheSameEndpoint.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,6 +67,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A32166EF29C648C300CFB5D4 /* Stubs */ = {
+			isa = PBXGroup;
+			children = (
+				A32166F029C648C300CFB5D4 /* test_singleResponse.json */,
+				A32166F229C648C300CFB5D4 /* test_singleStubbedResponse.json */,
+				A32166F129C648C300CFB5D4 /* test_twoStubbedResponsesToTheSameEndpoint.json */,
+				A32166F329C648C300CFB5D4 /* test_twoStubbedResponsesToTwoDifferentEndpoints.json */,
+			);
+			path = Stubs;
+			sourceTree = "<group>";
+		};
 		A3AEB53429B0CFD300F46D4E = {
 			isa = PBXGroup;
 			children = (
@@ -89,7 +100,7 @@
 		A3AEB53F29B0CFD300F46D4E /* MockMarksExample */ = {
 			isa = PBXGroup;
 			children = (
-				A3AEB57F29B0D0AC00F46D4E /* Stubs */,
+				A32166EF29C648C300CFB5D4 /* Stubs */,
 				A3AEB54029B0CFD300F46D4E /* AppDelegate.swift */,
 				A3AEB54229B0CFD300F46D4E /* SceneDelegate.swift */,
 				A3AEB54429B0CFD300F46D4E /* ViewController.swift */,
@@ -112,17 +123,6 @@
 			children = (
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		A3AEB57F29B0D0AC00F46D4E /* Stubs */ = {
-			isa = PBXGroup;
-			children = (
-				A3AEB58029B0D0AC00F46D4E /* test_singleResponse.json */,
-				A3AEB58129B0D0AC00F46D4E /* test_twoStubbedResponsesToTwoDifferentEndpoints.json */,
-				A3AEB58229B0D0AC00F46D4E /* test_singleStubbedResponse.json */,
-				A3AEB58329B0D0AC00F46D4E /* test_twoStubbedResponsesToTheSameEndpoint.json */,
-			);
-			path = Stubs;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -214,10 +214,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A3AEB58629B0D0AC00F46D4E /* test_singleStubbedResponse.json in Resources */,
-				A3AEB58429B0D0AC00F46D4E /* test_singleResponse.json in Resources */,
-				A3AEB58729B0D0AC00F46D4E /* test_twoStubbedResponsesToTheSameEndpoint.json in Resources */,
-				A3AEB58529B0D0AC00F46D4E /* test_twoStubbedResponsesToTwoDifferentEndpoints.json in Resources */,
+				A32166F729C648C300CFB5D4 /* test_twoStubbedResponsesToTwoDifferentEndpoints.json in Resources */,
+				A32166F429C648C300CFB5D4 /* test_singleResponse.json in Resources */,
+				A32166F529C648C300CFB5D4 /* test_twoStubbedResponsesToTheSameEndpoint.json in Resources */,
+				A32166F629C648C300CFB5D4 /* test_singleStubbedResponse.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
