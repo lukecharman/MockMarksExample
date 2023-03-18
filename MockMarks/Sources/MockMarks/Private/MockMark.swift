@@ -32,6 +32,7 @@ struct MockMark: Hashable {
     }
   }
 
+  /// Display the MockMark encoded as a JSON dictionary.
   var asJSON: [String: Any] {
     var json = [String: Any]()
 

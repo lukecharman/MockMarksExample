@@ -1,32 +1,44 @@
 import Foundation
 
-struct Recorder {
+extension MockMarks {
+  /// Used to record all API calls which come through the MockMarks' `session`.
+  struct Recorder {
+    /// An array of each recorded response in the current app session.
+    static var recordings = [[AnyHashable: Any]]()
 
-  static var recordings = [[AnyHashable: Any]]()
-
-  static func record(url: URL, data: Data?, response: URLResponse?, error: Error?) {
-    let mockmark = MockMark(
-      url: url,
-      response: MockMark.Response(
-        data: data,
-        urlResponse: response as? HTTPURLResponse,
-        error: nil
+    /// Makes a recording of the provided data, response, and error to the specifed URL.
+    ///
+    /// - Parameters:
+    ///   - url: The URL to which the call being mocked was made.
+    ///   - data: Optionally, the data returned from the call.
+    ///   - response: Optionally, the URL response returned from the call.
+    ///   - error: Optionally, the error returned from the call.
+    static func record(url: URL, data: Data?, response: URLResponse?, error: Error?) {
+      let mockmark = MockMark(
+        url: url,
+        response: MockMark.Response(
+          data: data,
+          urlResponse: response as? HTTPURLResponse,
+          error: nil
+        )
       )
-    )
 
-    recordings.insert(mockmark.asJSON, at: 0)
+      recordings.insert(mockmark.asJSON, at: 0)
 
-    writeRecordings()
-  }
-
-  static func writeRecordings() {
-    guard let name = ProcessInfo.processInfo.environment["XCUI_STUB_NAME"] else {
-      return
+      writeRecordings()
     }
+  }
+}
 
+private extension MockMarks.Recorder {
+
+  /// Write the current array of recordings to disk.
+  static func writeRecordings() {
     guard let fileUrl = MockMarks.recordingsURL else {
       return
     }
+
+    let name = "Recording_\(ISO8601DateFormatter().string(from: Date()))"
 
     var mockDirectoryUrl = fileUrl.deletingLastPathComponent().appendingPathComponent("Stubs")
     try! FileManager.default.createDirectory(at: mockDirectoryUrl, withIntermediateDirectories: true)
@@ -35,15 +47,5 @@ struct Recorder {
     let data = try! JSONSerialization.data(withJSONObject: recordings)
 
     try! data.write(to: mockDirectoryUrl)
-  }
-}
-
-private extension Recorder {
-
-  static func buildJSON(from url: URL, data: Data?, response: URLResponse?, error: Error?) -> [String: Any] {
-    var json = [String: Any]()
-    json["url"] = url
-
-    return json
   }
 }
