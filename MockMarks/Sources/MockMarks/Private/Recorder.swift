@@ -5,6 +5,8 @@ extension MockMarks {
   struct Recorder {
     /// An array of each recorded response in the current app session.
     static var recordings = [[AnyHashable: Any]]()
+    /// A name generated on each app launch for the recorded mocks.
+    static let name = generateName()
 
     /// Makes a recording of the provided data, response, and error to the specifed URL.
     ///
@@ -38,8 +40,6 @@ private extension MockMarks.Recorder {
       return
     }
 
-    let name = "Recording_\(ISO8601DateFormatter().string(from: Date()))"
-
     var mockDirectoryUrl = fileUrl.deletingLastPathComponent().appendingPathComponent("Stubs")
     try! FileManager.default.createDirectory(at: mockDirectoryUrl, withIntermediateDirectories: true)
     mockDirectoryUrl = URL(string: mockDirectoryUrl.absoluteString.appending("\(name).json"))!
@@ -47,5 +47,11 @@ private extension MockMarks.Recorder {
     let data = try! JSONSerialization.data(withJSONObject: recordings)
 
     try! data.write(to: mockDirectoryUrl)
+  }
+
+  /// Generates a unique name for each mock file generated per app launch.
+  static func generateName() -> String {
+    "Recording_\(ISO8601DateFormatter().string(from: Date()))"
+      .replacingOccurrences(of: ":", with: ".")
   }
 }
