@@ -31,15 +31,15 @@ struct MockMark: Hashable {
     }
   }
 
-  var asJSON: [AnyHashable: Any] {
-    var json = [AnyHashable: Any]()
+  var asJSON: [String: Any] {
+    var json = [String: Any]()
 
-    json["url"] = url
+    json["url"] = url.absoluteString
 
-    var mock = [AnyHashable: Any]()
+    var mock = [String: Any]()
 
-    if let data = response.data {
-      mock["data"] = data
+    if let data = response.data, let json = try? JSONSerialization.jsonObject(with: data) {
+      mock["json"] = json
     }
 
     if let code = response.urlResponse?.statusCode {

@@ -22,6 +22,8 @@ public enum MockMarks {
   /// Used to toggle MockMarks' recording mode. In this mode, incoming calls through `session` will be recorded.
   public static var isRecording: Bool = false
 
+  public static var recordingsURL: URL?
+
   /// Used to ascertain whether or not MockMarks is currently running within the context of a `MockMarksUITestCase`.
   public static var isXCUI: Bool {
     XCUIChecker.isRunning == String(true)

@@ -15,6 +15,28 @@ struct Recorder {
     )
 
     recordings.insert(mockmark.asJSON, at: 0)
+
+    writeRecordings()
+  }
+
+  static func writeRecordings() {
+    guard let name = ProcessInfo.processInfo.environment["XCUI_RECORDING_TEST_NAME"] else {
+      return
+    }
+
+    // Need a way to pass the app's root path + \Stubs\ here.
+
+    guard let fileUrl = MockMarks.recordingsURL else {
+      fatalError()
+    }
+
+    var mockDirectoryUrl = fileUrl.deletingLastPathComponent().appendingPathComponent("Stubs")
+    try! FileManager.default.createDirectory(at: mockDirectoryUrl, withIntermediateDirectories: true)
+    mockDirectoryUrl = URL(string: mockDirectoryUrl.absoluteString.appending("\(name).json"))!
+
+    let data = try! JSONSerialization.data(withJSONObject: recordings)
+
+    try! data.write(to: mockDirectoryUrl)
   }
 }
 

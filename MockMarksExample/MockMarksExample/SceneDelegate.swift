@@ -22,6 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     // 3. If we want to record responses, turn record mode on.
     MockMarks.isRecording = true
+    MockMarks.recordingsURL = URL(filePath: #file)
 
     // 4. Use the MockMarks session if it's available in your app.
     let vm = ViewModel(urlSession: MockMarks.session ?? .shared)
