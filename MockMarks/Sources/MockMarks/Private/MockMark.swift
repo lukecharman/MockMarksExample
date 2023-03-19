@@ -1,21 +1,11 @@
 import Foundation
 
 /// A data structure representing a mocked response to a specific URL.
-struct MockMark: Hashable {
+struct MockMark {
   /// The URL to which queries will return the associated stub.
   let url: URL
   /// The stubbed response which will be returned to the `Response`'s `url`.
   let response: Response
-
-  /// Hashable conformance.
-  func hash(into hasher: inout Hasher) {
-    hasher.combine(url)
-  }
-
-  /// Equatable conformance.
-  static func == (lhs: MockMark, rhs: MockMark) -> Bool {
-    lhs.url == rhs.url
-  }
 
   /// Packages the different parts of a stubbed response.
   struct Response {

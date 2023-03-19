@@ -62,6 +62,18 @@ final class DataTaskTests: XCTestCase {
 
     XCTAssertFalse(task.didCallResume)
   }
+
+  func test_resume_shouldDeferToSuperclass_whenRecording() {
+    XCUIChecker.isRunning = "false"
+    MockMarks.isRecording = true
+
+    let task = MockURLSessionDataTask()
+    task.mockedCurrentRequest = URLRequest(url: URL(string: "A")!)
+
+    let MockMarksTask = MockMarks.DataTask(stubbing: task, completionHandler: { _, _, _ in })
+    MockMarksTask.resume()
+    XCTAssert(task.didCallResume)
+  }
 }
 
 private class MockURLSessionDataTask: URLSessionDataTask {

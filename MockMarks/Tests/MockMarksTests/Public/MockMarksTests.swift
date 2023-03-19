@@ -35,6 +35,30 @@ final class MockMarksTests: XCTestCase {
     }
   }
 
+  func test_setUp_shouldNotLoadJSON_whenXCUIIsNotRunning() {
+    let processInfo = MockProcessInfo()
+    processInfo.isRunningXCUI = false
+    MockMarks.setUp(processInfo: processInfo, bundle: .module)
+    XCTAssert(MockMarks.queue.queuedResponses.isEmpty)
+  }
+
+  func test_setUp_shouldNotLoadJSON_whenNoFileToLoadIsSet() {
+    let processInfo = MockProcessInfo()
+    processInfo.mockedEnvironment = ["XCUI_IS_RUNNING": String(true)]
+    MockMarks.setUp(processInfo: processInfo, bundle: .module)
+    XCTAssert(MockMarks.queue.queuedResponses.isEmpty)
+  }
+
+  func test_setUp_shouldNotQueue_whenJSONFailsToLoad() {
+    let processInfo = MockProcessInfo()
+    processInfo.mockedEnvironment = [
+      "XCUI_IS_RUNNING": String(true),
+      "XCUI_MOCK_NAME": "I Don't Exist"
+    ]
+    MockMarks.setUp(processInfo: processInfo, bundle: .module)
+    XCTAssert(MockMarks.queue.queuedResponses.isEmpty)
+  }
+
   func test_setUp_shouldLoadJSON_whenPathProvided_andPathIsValid() {
     let processInfo = MockProcessInfo()
     processInfo.isRunningXCUI = true
@@ -50,11 +74,16 @@ final class MockMarksTests: XCTestCase {
 class MockProcessInfo: ProcessInfo {
   var didQueryInitialMockJSON = false
   var isRunningXCUI = false
+  var mockedEnvironment: [String: String]?
 
   override var environment: [String: String] {
-    return [
-      "XCUI_INITIAL_MOCK_JSON": "MockMarksTests",
-      "XCUI_IS_RUNNING": String(isRunningXCUI)
-    ]
+    if let mockedEnvironment {
+      return mockedEnvironment
+    } else {
+      return [
+        "XCUI_MOCK_NAME": "MockMarksTests",
+        "XCUI_IS_RUNNING": String(isRunningXCUI)
+      ]
+    }
   }
 }

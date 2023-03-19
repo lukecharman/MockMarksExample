@@ -94,6 +94,16 @@ final class LoaderTests: XCTestCase {
     XCTAssertEqual(result.count, 1)
   }
 
+  func test_parseStubs_shouldIgnoreStubsWhereURLIsInvalid() {
+    let result = loader.parseStubs(from: badURLJSON)
+    XCTAssertEqual(result.count, 0)
+  }
+
+  func test_parseStubs_shouldIgnoreStubsWhereNoMockDataIsFound() {
+    let result = loader.parseStubs(from: noMockJSON)
+    XCTAssertEqual(result.count, 0)
+  }
+
   var goodJSON: [[AnyHashable: Any]] {
     [
       [
@@ -122,6 +132,22 @@ final class LoaderTests: XCTestCase {
         "mock": [
           "jsondle": ["C": "D"]
         ]
+      ]
+    ]
+  }
+
+  var badURLJSON: [[AnyHashable: Any]] {
+    [
+      [
+        "url": "💥"
+      ]
+    ]
+  }
+
+  var noMockJSON: [[AnyHashable: Any]] {
+    [
+      [
+        "url": "https://blah.blah"
       ]
     ]
   }
