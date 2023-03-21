@@ -11,12 +11,10 @@ open class MockMarksUITestCase: XCTestCase {
 
     app.launchEnvironment["XCUI_IS_RUNNING"] = String(true)
     app.launchEnvironment["XCUI_MOCK_NAME"] = stubName
-
-    app.launch()
   }
 }
 
-private extension MockMarksUITestCase {
+public extension MockMarksUITestCase {
 
   var stubName: String {
     name

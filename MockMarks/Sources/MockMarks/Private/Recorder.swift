@@ -36,17 +36,27 @@ private extension MockMarks.Recorder {
 
   /// Write the current array of recordings to disk.
   static func writeRecordings() {
-    guard let fileUrl = MockMarks.recordingsURL else {
-      return
+    guard let path = ProcessInfo.processInfo.environment["BOOP_DIRECTORY"] else {
+      fatalError("PATH")
     }
 
-    var mockDirectoryUrl = fileUrl.deletingLastPathComponent().appendingPathComponent("Stubs")
-    try! FileManager.default.createDirectory(at: mockDirectoryUrl, withIntermediateDirectories: true)
-    mockDirectoryUrl = URL(string: mockDirectoryUrl.absoluteString.appending("\(name).json"))!
+    guard let file = ProcessInfo.processInfo.environment["BOOP_FILENAME"] else {
+      fatalError("FILENAME")
+    }
 
     let data = try! JSONSerialization.data(withJSONObject: recordings)
 
-    try! data.write(to: mockDirectoryUrl)
+    if #available(iOS 16, *) {
+      var url = URL(filePath: path)
+
+      try! FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
+
+      // Make hte __Stubs__ directory firs,t then append a file to it and write that?
+
+      url.append(path: file)
+
+      try! data.write(to: url)
+    }
   }
 
   /// Generates a unique name for each mock file generated per app launch.
