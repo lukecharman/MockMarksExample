@@ -2,9 +2,9 @@ import Foundation
 
 extension MockMarks {
   /// Used to record all API calls which come through the MockMarks' `session`.
-  struct Recorder {
+  class Recorder {
     /// An array of each recorded response in the current app session.
-    static var recordings = [[String: Any]]()
+    var recordings = [[String: Any]]()
 
     /// Makes a recording of the provided data, response, and error to the specifed URL.
     ///
@@ -13,7 +13,7 @@ extension MockMarks {
     ///   - data: Optionally, the data returned from the call.
     ///   - response: Optionally, the URL response returned from the call.
     ///   - error: Optionally, the error returned from the call.
-    static func record(
+    func record(
       url: URL,
       data: Data?,
       response: URLResponse?,
@@ -39,7 +39,7 @@ extension MockMarks {
 private extension MockMarks.Recorder {
 
   /// Write the current array of recordings to disk.
-  static func writeRecordings(processInfo: ProcessInfo = .processInfo, fileManager: FileManager = .default) {
+  func writeRecordings(processInfo: ProcessInfo = .processInfo, fileManager: FileManager = .default) {
     guard let path = processInfo.environment[MockMarks.Constants.stubDirectory] else {
       return
     }

@@ -6,16 +6,16 @@ final class RecorderTests: XCTestCase {
 
   override func setUp() {
     super.setUp()
-    MockMarks.Recorder.recordings.removeAll()
+    MockMarks.recorder.recordings.removeAll()
   }
 
   func test_record_shouldInsertIntoRecordings() {
     writeSomething()
-    XCTAssertEqual(MockMarks.Recorder.recordings.count, 1)
+    XCTAssertEqual(MockMarks.recorder.recordings.count, 1)
     writeSomething()
-    XCTAssertEqual(MockMarks.Recorder.recordings.count, 2)
+    XCTAssertEqual(MockMarks.recorder.recordings.count, 2)
     writeSomething()
-    XCTAssertEqual(MockMarks.Recorder.recordings.count, 3)
+    XCTAssertEqual(MockMarks.recorder.recordings.count, 3)
   }
 }
 
@@ -28,7 +28,7 @@ private extension RecorderTests {
       MockMarks.Constants.stubFilename: "B",
     ]
 
-    MockMarks.Recorder.record(
+    MockMarks.recorder.record(
       url: URL(string: "https://a.b.c")!,
       data: nil,
       response: nil,

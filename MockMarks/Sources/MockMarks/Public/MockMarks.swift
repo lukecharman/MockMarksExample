@@ -45,11 +45,14 @@ public enum MockMarks {
     }
   }
 
-  /// Object handling the management of responses into and out of the response queue.
+  /// A queue, handling the management of responses into and out of the response queue.
   static var queue: Queue = Queue()
 
-  /// A loader, used to read data from a JSON stub file and parse it into a stubbed response.
+  /// A loader, used to read data from a JSON stub file and parse it into a mocked response.
   static var loader: Loader = Loader()
+
+  /// A recorder, used to write recorded mocks out to disk.
+  static var recorder: Recorder = Recorder()
 
   /// Dispatches the next queued response for the provided URL. Checks the queued response array for responses
   /// matching the given URL, and returns and removes the most recently added.

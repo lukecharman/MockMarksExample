@@ -30,7 +30,7 @@ extension MockMarks {
     ) -> URLSessionDataTask {
       let superTask = urlSession.dataTask(with: request, completionHandler: { data, response, error in
         if MockMarks.shouldRecord(), let url = request.url {
-          Recorder.record(url: url, data: data, response: response, error: error)
+          MockMarks.recorder.record(url: url, data: data, response: response, error: error)
         }
         completionHandler(data, response, error)
       })
@@ -53,7 +53,7 @@ extension MockMarks {
       DataTask(
         mocking: urlSession.dataTask(with: url, completionHandler: { data, response, error in
           if MockMarks.shouldRecord() {
-            Recorder.record(url: url, data: data, response: response, error: error)
+            MockMarks.recorder.record(url: url, data: data, response: response, error: error)
           }
           completionHandler(data, response, error)
         }),
