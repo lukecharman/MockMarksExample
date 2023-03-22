@@ -10,7 +10,7 @@ final class SessionTests: XCTestCase {
   override func setUp() {
     super.setUp()
     mockURLSession = MockSession()
-    MockMarks.recorder.recordings.removeAll()
+    MockMarks.shared.recorder.recordings.removeAll()
     MockMarksSession = MockMarks.Session(mocking: mockURLSession)
   }
 
@@ -56,14 +56,10 @@ final class SessionTests: XCTestCase {
     }
   }
 
-  func test_dataTaskWithURLRequest_shouldRecordWhenRecordingIsEnabled() {
-
-  }
-
   func test_dataTaskWithURLRequest_shouldNotRecordWhenRecordingIsDisabled() {
     _ = MockMarksSession.dataTask(with: url) { _, _, _ in }
     XCTAssert(mockURLSession.didCallDataTaskWithURL)
-    XCTAssert(MockMarks.recorder.recordings.isEmpty)
+    XCTAssert(MockMarks.shared.recorder.recordings.isEmpty)
   }
 
   // MARK: - dataTaskWithURL

@@ -21,7 +21,7 @@ extension MockMarks {
     let urlSession: URLSession
 
     /// Used to record responses from calls made to this session.
-    var recorder: RecorderInterface = MockMarks.recorder
+    var recorder: RecorderInterface = MockMarks.shared.recorder
 
     /// Initialise a `Session` which wraps another `URLSession` and can mock its data tasks.
     ///

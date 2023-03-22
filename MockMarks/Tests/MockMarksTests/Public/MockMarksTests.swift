@@ -6,26 +6,26 @@ final class MockMarksTests: XCTestCase {
 
   override func setUp() {
     super.setUp()
-    MockMarks.queue.queuedResponses.removeAll()
+    MockMarks.shared.queue.queuedResponses.removeAll()
   }
 
   func test_isXCUI_shouldReferToProcessInfo_whenTrue() {
     let mockedProcessInfo = MockProcessInfo()
     mockedProcessInfo.mockedIsRunningXCUI = true
-    XCTAssert(MockMarks.isXCUI(processInfo: mockedProcessInfo))
+    XCTAssert(MockMarks.shared.isXCUI(processInfo: mockedProcessInfo))
   }
 
   func test_isXCUI_shouldReferToProcessInfo_whenFalse() {
     let mockedProcessInfo = MockProcessInfo()
     mockedProcessInfo.mockedIsRunningXCUI = false
-    XCTAssertFalse(MockMarks.isXCUI(processInfo: mockedProcessInfo))
+    XCTAssertFalse(MockMarks.shared.isXCUI(processInfo: mockedProcessInfo))
   }
 
   func test_setUp_shouldNotLoadJSON_whenXCUIIsNotRunning() {
     let processInfo = MockProcessInfo()
     processInfo.mockedIsRunningXCUI = false
-    MockMarks.setUp(processInfo: processInfo)
-    XCTAssert(MockMarks.queue.queuedResponses.isEmpty)
+    MockMarks.shared.setUp(session: MockMarks.Session(), processInfo: processInfo)
+    XCTAssert(MockMarks.shared.queue.queuedResponses.isEmpty)
   }
 
   func test_setUp_shouldNotLoadJSON_whenStubDirectoryIsNotSet() {
@@ -34,8 +34,8 @@ final class MockMarksTests: XCTestCase {
       MockMarks.Constants.isXCUI: String(true),
       MockMarks.Constants.stubFilename: "B"
     ]
-    MockMarks.setUp(processInfo: processInfo)
-    XCTAssert(MockMarks.queue.queuedResponses.isEmpty)
+    MockMarks.shared.setUp(session: MockMarks.Session(), processInfo: processInfo)
+    XCTAssert(MockMarks.shared.queue.queuedResponses.isEmpty)
   }
 
   func test_setUp_shouldNotQueue_whenStubFilenameIsNotSet() {
@@ -44,8 +44,8 @@ final class MockMarksTests: XCTestCase {
       MockMarks.Constants.isXCUI: String(true),
       MockMarks.Constants.stubDirectory: "B"
     ]
-    MockMarks.setUp(processInfo: processInfo)
-    XCTAssert(MockMarks.queue.queuedResponses.isEmpty)
+    MockMarks.shared.setUp(session: MockMarks.Session(), processInfo: processInfo)
+    XCTAssert(MockMarks.shared.queue.queuedResponses.isEmpty)
   }
 
   func test_setUp_shouldLoadJSON_whenURLDoesContainJSON() {
@@ -59,8 +59,8 @@ final class MockMarksTests: XCTestCase {
       MockMarks.Constants.stubFilename: "LoaderTests.json"
     ]
 
-    MockMarks.setUp(processInfo: processInfo)
-    XCTAssertFalse(MockMarks.queue.queuedResponses.isEmpty)
+    MockMarks.shared.setUp(session: MockMarks.Session(), processInfo: processInfo)
+    XCTAssertFalse(MockMarks.shared.queue.queuedResponses.isEmpty)
   }
 
   func test_dispatchNextQueuedResponse_shouldCallCompletion() {
@@ -68,8 +68,8 @@ final class MockMarksTests: XCTestCase {
     let response = MockMark.Response(data: data, urlResponse: nil, error: nil)
     let mockmark = MockMark(url: url, response: response)
 
-    MockMarks.queue.queue(mockmark: mockmark)
-    _ = MockMarks.dispatchNextQueuedResponse(for: url) { data, _, _ in
+    MockMarks.shared.queue.queue(mockmark: mockmark)
+    _ = MockMarks.shared.dispatchNextQueuedResponse(for: url) { data, _, _ in
       let json = try! JSONSerialization.jsonObject(with: data!, options: []) as! [String: Any]
       XCTAssertEqual(json["A"] as! String, "B")
     }

@@ -58,7 +58,3 @@ final class MockMarkTests: XCTestCase {
     XCTAssertEqual(resultMock["error"] as! [String: String], ["A": "B"])
   }
 }
-
-private enum TestError: Error {
-  case generic
-}
