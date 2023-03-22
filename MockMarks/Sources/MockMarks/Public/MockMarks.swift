@@ -16,6 +16,13 @@ import Foundation
 /// to calls to specific endpoints via the `queue` and `queueValidResponse` methods.
 public enum MockMarks {
 
+  public struct Constants {
+    public static let isXCUI = "MOCKMARKS_IS_XCUI"
+    public static let isRecording = "MOCKMARKS_IS_RECORDING"
+    public static let stubDirectory = "MOCKMARKS_STUB_DIRECTORY"
+    public static let stubFilename = "MOCKMARKS_STUB_FILENAME"
+  }
+
   /// A `URLSession` set to this variable will have its scheduled data tasks checked for suitable stubs.
   public static var session: MockMarks.Session?
 
@@ -36,9 +43,6 @@ public enum MockMarks {
   /// A loader, used to read data from a JSON stub file and parse it into a stubbed response.
   private static var loader: Loader = Loader()
 
-  /// Used to read the filename of a stub file, provided by the individual test case.
-  private static let initialMockJSON = "MOCKMARKS_STUB_FILENAME"
-
   /// Dispatches the next queued response for the provided URL. Checks the queued response array for responses
   /// matching the given URL, and returns and removes the most recently added.
   ///
@@ -55,13 +59,13 @@ public enum MockMarks {
   ///
   /// - Parameters:
   ///   - processInfo: An injectable instance of `ProcessInfo` used to check environment variables.
-  public static func setUp(processInfo: ProcessInfo = .processInfo, bundle: Bundle = .main) {
-    guard processInfo.environment["MOCKMARKS_IS_XCUI"] == String(true) else {
+  public static func setUp(processInfo: ProcessInfo = .processInfo) {
+    guard processInfo.environment[MockMarks.Constants.isXCUI] == String(true) else {
       return
     }
 
-    guard let directory = processInfo.environment["MOCKMARKS_STUB_DIRECTORY"] else { return }
-    guard let filename = processInfo.environment["MOCKMARKS_STUB_FILENAME"] else { return }
+    guard let directory = processInfo.environment[MockMarks.Constants.stubDirectory] else { return }
+    guard let filename = processInfo.environment[MockMarks.Constants.stubFilename] else { return }
 
     let url: URL
     if #available(iOS 16, *) {

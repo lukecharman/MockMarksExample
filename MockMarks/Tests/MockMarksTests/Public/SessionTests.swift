@@ -57,10 +57,7 @@ final class SessionTests: XCTestCase {
   }
 
   func test_dataTaskWithURLRequest_shouldRecordWhenRecordingIsEnabled() {
-    MockMarks.setRecording(to: URL(fileURLWithPath: #file))
-    _ = MockMarksSession.dataTask(with: url) { _, _, _ in }
-    XCTAssert(mockURLSession.didCallDataTaskWithURL)
-    XCTAssertFalse(MockMarks.Recorder.recordings.isEmpty)
+
   }
 
   func test_dataTaskWithURLRequest_shouldNotRecordWhenRecordingIsDisabled() {

@@ -1,3 +1,4 @@
+import MockMarks
 import XCTest
 
 open class MockMarksUITestCase: XCTestCase {
@@ -18,14 +19,14 @@ open class MockMarksUITestCase: XCTestCase {
       url = URL(string: "A")!
     }
 
-    app.launchEnvironment["MOCKMARKS_IS_XCUI"] = String(true)
+    app.launchEnvironment[MockMarks.Constants.isXCUI] = String(true)
 
     if recording {
-      app.launchEnvironment["MOCKMARKS_IS_RECORDING"] = String(true)
+      app.launchEnvironment[MockMarks.Constants.isRecording] = String(true)
     }
 
-    app.launchEnvironment["MOCKMARKS_STUB_DIRECTORY"] = url.absoluteString
-    app.launchEnvironment["MOCKMARKS_STUB_FILENAME"] = "\(stubName).json"
+    app.launchEnvironment[MockMarks.Constants.stubDirectory] = url.absoluteString
+    app.launchEnvironment[MockMarks.Constants.stubFilename] = "\(stubName).json"
 
     app.launch()
   }

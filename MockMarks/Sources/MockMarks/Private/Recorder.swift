@@ -37,11 +37,11 @@ private extension MockMarks.Recorder {
   /// Write the current array of recordings to disk.
   static func writeRecordings() {
 
-    guard let path = ProcessInfo.processInfo.environment["MOCKMARKS_STUB_DIRECTORY"] else {
+    guard let path = ProcessInfo.processInfo.environment[MockMarks.Constants.stubDirectory] else {
       fatalError("PATH")
     }
 
-    guard let file = ProcessInfo.processInfo.environment["MOCKMARKS_STUB_FILENAME"] else {
+    guard let file = ProcessInfo.processInfo.environment[MockMarks.Constants.stubFilename] else {
       fatalError("FILENAME")
     }
 

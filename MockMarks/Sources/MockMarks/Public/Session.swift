@@ -31,7 +31,7 @@ extension MockMarks {
       completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void
     ) -> URLSessionDataTask {
       let superTask = urlSession.dataTask(with: request, completionHandler: { data, response, error in
-        if ProcessInfo.processInfo.environment["MOCKMARKS_IS_RECORDING"] == String(true), let url = request.url {
+        if ProcessInfo.processInfo.environment[MockMarks.Constants.isRecording] == String(true), let url = request.url {
           Recorder.record(url: url, data: data, response: response, error: error)
         }
         completionHandler(data, response, error)
@@ -54,7 +54,7 @@ extension MockMarks {
     ) -> URLSessionDataTask {
       DataTask(
         stubbing: urlSession.dataTask(with: url, completionHandler: { data, response, error in
-          if ProcessInfo.processInfo.environment["MOCKMARKS_IS_RECORDING"] == String(true) {
+          if ProcessInfo.processInfo.environment[MockMarks.Constants.isRecording] == String(true) {
             Recorder.record(url: url, data: data, response: response, error: error)
           }
           completionHandler(data, response, error)
