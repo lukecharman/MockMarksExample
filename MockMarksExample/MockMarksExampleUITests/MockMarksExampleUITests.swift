@@ -6,20 +6,7 @@ import MockMarks_XCUI
 class MockMarksExampleUITests: MockMarksUITestCase {
 
   override func setUp() {
-    super.setUp()
-
-    let name = #file
-    let url = URL(string: name)!
-      .deletingLastPathComponent()
-      .appending(path: "__Stubs__")
-
-    MockMarks.setRecording(to: url)
-
-    app.launchEnvironment["BOOP_RECORDING"] = String(true)
-    app.launchEnvironment["BOOP_DIRECTORY"] = url.absoluteString
-    app.launchEnvironment["BOOP_FILENAME"] = "\(stubName).json"
-
-    app.launch()
+    super.setUp(recording: false)
   }
 
   func test_singleResponse() {

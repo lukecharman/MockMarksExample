@@ -12,8 +12,8 @@ extension MockMarks {
     ///   - bundle: The bundle in which to look for JSON stubs. Defaults to the app's main bundle.
     ///
     /// - Returns: An optional array of `MockMarksMockedResponse`s, read sequentially from the named JSON.
-    func loadJSON(named name: String, in bundle: Bundle = .main) -> [MockMark]? {
-      guard let data = loadJSONData(named: name, in: bundle) else {
+    func loadJSON(from url: URL) -> [MockMark]? {
+      guard let data = loadJSONData(from: url) else {
         return nil
       }
 
@@ -27,16 +27,11 @@ extension MockMarks {
     /// Load JSON data from the given bundle of the given name.
     ///
     /// - Parameters:
-    ///   - name: The filename to look for in the app bundle which contains ordered, stubbed responses.
-    ///   - bundle: The bundle in which to look for JSON stubs. Defaults to the app's main bundle.
+    ///   - url: The URL which contains ordered, stubbed responses.
     ///
     /// - Returns: An optional instance of `Data` containing the contents of the named file.
-    func loadJSONData(named name: String, in bundle: Bundle = .main) -> Data? {
-      guard let bundleURL = bundle.url(forResource: name, withExtension: "json") else {
-        return nil
-      }
-
-      return try? Data(contentsOf: bundleURL)
+    func loadJSONData(from url: URL) -> Data? {
+      try? Data(contentsOf: url)
     }
 
     /// Load JSON data structure from the given `Data` object.

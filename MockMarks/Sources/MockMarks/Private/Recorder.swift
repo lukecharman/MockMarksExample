@@ -36,11 +36,12 @@ private extension MockMarks.Recorder {
 
   /// Write the current array of recordings to disk.
   static func writeRecordings() {
-    guard let path = ProcessInfo.processInfo.environment["BOOP_DIRECTORY"] else {
+
+    guard let path = ProcessInfo.processInfo.environment["MOCKMARKS_STUB_DIRECTORY"] else {
       fatalError("PATH")
     }
 
-    guard let file = ProcessInfo.processInfo.environment["BOOP_FILENAME"] else {
+    guard let file = ProcessInfo.processInfo.environment["MOCKMARKS_STUB_FILENAME"] else {
       fatalError("FILENAME")
     }
 
@@ -50,8 +51,6 @@ private extension MockMarks.Recorder {
       var url = URL(filePath: path)
 
       try! FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
-
-      // Make hte __Stubs__ directory firs,t then append a file to it and write that?
 
       url.append(path: file)
 

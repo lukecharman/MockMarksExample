@@ -44,7 +44,7 @@ final class MockMarksTests: XCTestCase {
 
   func test_setUp_shouldNotLoadJSON_whenNoFileToLoadIsSet() {
     let processInfo = MockProcessInfo()
-    processInfo.mockedEnvironment = ["XCUI_IS_RUNNING": String(true)]
+    processInfo.mockedEnvironment = ["MOCKMARKS_IS_XCUI": String(true)]
     MockMarks.setUp(processInfo: processInfo, bundle: .module)
     XCTAssert(MockMarks.queue.queuedResponses.isEmpty)
   }
@@ -52,7 +52,7 @@ final class MockMarksTests: XCTestCase {
   func test_setUp_shouldNotQueue_whenJSONFailsToLoad() {
     let processInfo = MockProcessInfo()
     processInfo.mockedEnvironment = [
-      "XCUI_IS_RUNNING": String(true),
+      "MOCKMARKS_IS_XCUI": String(true),
       "XCUI_MOCK_NAME": "I Don't Exist"
     ]
     MockMarks.setUp(processInfo: processInfo, bundle: .module)
@@ -82,7 +82,7 @@ class MockProcessInfo: ProcessInfo {
     } else {
       return [
         "XCUI_MOCK_NAME": "MockMarksTests",
-        "XCUI_IS_RUNNING": String(isRunningXCUI)
+        "MOCKMARKS_IS_XCUI": String(isRunningXCUI)
       ]
     }
   }
