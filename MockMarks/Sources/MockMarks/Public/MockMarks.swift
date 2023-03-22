@@ -12,17 +12,9 @@ public enum MockMarks {
     public static let stubsFolder = "__Stubs__"
   }
 
-  /// A `URLSession` set to this variable will have its scheduled data tasks checked for suitable mocks.
-  public static var session: MockMarks.Session?
-
-  /// Used to ascertain whether or not MockMarks is currently running within the context of a `MockMarksUITestCase`.
-  public static func isXCUI(processInfo: ProcessInfo = .processInfo) -> Bool {
-    processInfo.environment[Constants.isXCUI] == String(true)
-  }
-
   /// Performs initial setup for MockMarks. Should be called as soon as possible after your app launches
   /// so that calls made immediately following app launch can be stubbed, if required. Early exits
-  /// immediately if not in the context of UI testing to avoid unnecessary processing
+  /// immediately if not in the context of UI testing to avoid unnecessary processing.
   ///
   /// - Parameters:
   ///   - processInfo: An injectable instance of `ProcessInfo` used to check environment variables.
@@ -45,14 +37,22 @@ public enum MockMarks {
     }
   }
 
+  /// Used to ascertain whether or not MockMarks is currently running within the context of a `MockMarksUITestCase`.
+  public static func isXCUI(processInfo: ProcessInfo = .processInfo) -> Bool {
+    processInfo.environment[Constants.isXCUI] == String(true)
+  }
+
+  /// A `URLSession` set to this variable will have its scheduled data tasks checked for suitable mocks.
+  public static var session: SessionInterface?
+
   /// A queue, handling the management of responses into and out of the response queue.
-  static var queue: Queue = Queue()
+  static var queue: QueueInterface = Queue()
 
   /// A loader, used to read data from a JSON stub file and parse it into a mocked response.
-  static var loader: Loader = Loader()
+  static var loader: LoaderInterface = Loader()
 
   /// A recorder, used to write recorded mocks out to disk.
-  static var recorder: Recorder = Recorder()
+  static var recorder: RecorderInterface = Recorder()
 
   /// Dispatches the next queued response for the provided URL. Checks the queued response array for responses
   /// matching the given URL, and returns and removes the most recently added.
@@ -62,9 +62,5 @@ public enum MockMarks {
   ///   - completion: A closure to be called with the queued response.
   static func dispatchNextQueuedResponse(for url: URL, to completion: @escaping DataTask.CompletionHandler) -> Bool {
     queue.dispatchNextQueuedResponse(for: url, to: completion)
-  }
-
-  static func shouldRecord(processInfo: ProcessInfo = .processInfo) -> Bool {
-    processInfo.environment[MockMarks.Constants.isRecording] == String(true)
   }
 }

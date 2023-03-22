@@ -1,5 +1,9 @@
 import Foundation
 
+protocol LoaderInterface {
+  func loadJSON(from url: URL) -> [MockMark]?
+}
+
 extension MockMarks {
 
   /// Simple typealiases used to make this structure cleaner to read.
@@ -7,7 +11,7 @@ extension MockMarks {
   private typealias MockMarkArray = [MockMarkDictionary]
 
   /// Used to load mocks from JSON files, and decode them.
-  struct Loader {
+  struct Loader: LoaderInterface {
 
     struct Constants {
       static let url = "url"

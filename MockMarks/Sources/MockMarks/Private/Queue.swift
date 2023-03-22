@@ -1,9 +1,16 @@
 import Foundation
 
+protocol QueueInterface {
+  var queuedResponses: [URL: [MockMark.Response]] { get set }
+
+  func queue(mockmark: MockMark)
+  func dispatchNextQueuedResponse(for url: URL, to completion: @escaping MockMarks.DataTask.CompletionHandler) -> Bool
+}
+
 extension MockMarks {
 
   /// Used to queue mocked responses to calls to various endpoints.
-  class Queue {
+  class Queue: QueueInterface {
 
     /// A set of responses. Calls to URLs matching the keys will sequentially be mocked with data in the response.
     var queuedResponses = [URL: [MockMark.Response]]()

@@ -9,12 +9,6 @@ final class MockMarksTests: XCTestCase {
     MockMarks.queue.queuedResponses.removeAll()
   }
 
-  func test_session_shouldBeStored() {
-    let session = MockMarks.Session(mocking: .shared)
-    MockMarks.session = session
-    XCTAssertEqual(MockMarks.session, session)
-  }
-
   func test_isXCUI_shouldReferToProcessInfo_whenTrue() {
     let mockedProcessInfo = MockProcessInfo()
     mockedProcessInfo.mockedIsRunningXCUI = true
