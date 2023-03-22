@@ -1,11 +1,7 @@
 # MockMarks
 
 ## Still To Do
-* Refactor Loader into smaller methods, tests should not need touching.
-* Refactor Writer into smaller methods and test as much as you can.
-* Refactor to use Codable for the JSON in/out stuff.
-
-* Decide on how error is represented in the json.
+* Decide on how error is represented in the json and how to mock it usefully.
 * Write some decent documentation including "What can i mock?" list of things in the JSON that are acceptable
 
 ## What is MockMarks?

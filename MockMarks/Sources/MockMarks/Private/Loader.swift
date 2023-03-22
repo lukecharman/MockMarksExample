@@ -31,36 +31,35 @@ extension MockMarks {
       guard let data = try? Data(contentsOf: url) else { return nil }
       guard let json = try? JSONSerialization.jsonObject(with: data) as? MockMarkArray else { return nil }
 
-      var mocks = [MockMark]()
+      return json.compactMap { mockMark(from: $0) }
+    }
 
-      for dict in json {
-        guard let urlString = dict[Constants.url] as? String else { continue }
-        guard let url = URL(string: urlString) else { continue }
-        guard let mock = dict[Constants.mock] as? MockMarkDictionary else { continue }
+    private func mockMark(from json: [String: Any]) -> MockMark? {
+      guard let urlString = json[Constants.url] as? String else { return nil }
+      guard let url = URL(string: urlString) else { return nil }
+      guard let mock = json[Constants.mock] as? MockMarkDictionary else { return nil }
 
-        var jsonData: Data?
-        if let jsonObject = mock[Constants.json] {
-          jsonData = try? JSONSerialization.data(withJSONObject: jsonObject)
-        }
+      let response = MockMark.Response(
+        data: data(from: mock),
+        urlResponse: urlResponse(to: url, from: mock),
+        error: nil
+      )
 
-        mocks.append(
-          MockMark(
-            url: url,
-            response: MockMark.Response(
-              data: jsonData,
-              urlResponse: HTTPURLResponse(
-                url: url,
-                statusCode: mock[Constants.statusCode] as? Int ?? 200,
-                httpVersion: nil,
-                headerFields: nil
-              ),
-              error: nil
-            )
-          )
-        )
-      }
+      return MockMark(url: url, response: response)
+    }
 
-      return mocks
+    private func data(from mock: MockMarkDictionary) -> Data? {
+      guard let json = mock[Constants.json] else { return nil }
+      return try? JSONSerialization.data(withJSONObject: json)
+    }
+
+    private func urlResponse(to url: URL, from mock: MockMarkDictionary) -> HTTPURLResponse? {
+      HTTPURLResponse(
+        url: url,
+        statusCode: mock[Constants.statusCode] as? Int ?? 200,
+        httpVersion: nil,
+        headerFields: nil
+      )
     }
   }
 }
