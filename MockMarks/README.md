@@ -1,7 +1,13 @@
 # MockMarks
 
 ## Still To Do
-* Recording tests.
+* Consider and write all tests for Recorder, make it a singleton.
+* Update Session tests to use the new singleton.
+* There's a tiny bit of untested code in MockMarks setUp for pre-16, also `Loader` needs to be mockable, protocol.
+
+* Refactor Loader into smaller methods, tests should not need touching.
+* Use Codable for the JSON in/out stuff.
+
 * Decide on how error is represented in the json.
 * Write some decent documentation including "What can i mock?" list of things in the JSON that are acceptable
 

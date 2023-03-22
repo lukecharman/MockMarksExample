@@ -13,6 +13,13 @@ final class MockMarkTests: XCTestCase {
     XCTAssertNil(mockMark.response.json)
   }
 
+  func test_json_shouldReturnJSON_whenThereIsValidData() {
+    let sourceJSON = ["A": "B"]
+    let data = try! JSONSerialization.data(withJSONObject: sourceJSON)
+    let response = MockMark.Response(data: data, urlResponse: nil, error: nil)
+    XCTAssertEqual(response.json as! [String: String], sourceJSON)
+  }
+
   func test_asJSON_shouldReturnMockWithContents_whenResponseHasData() {
     let sourceJSON = ["A": "B"]
     let data = try! JSONSerialization.data(withJSONObject: sourceJSON)
@@ -38,4 +45,20 @@ final class MockMarkTests: XCTestCase {
     let resultMock = result["mock"] as! [String: Any]
     XCTAssertEqual(resultMock["responseCode"] as! Int, 456)
   }
+
+  func test_asJSON_shouldReturnMockWithError_whenResponseHasError() {
+    let url = URL(string: "A")!
+    let mockMark = MockMark(
+      url: url,
+      response: MockMark.Response(data: nil, urlResponse: nil, error: ["A": "B"])
+    )
+
+    let result = mockMark.asJSON
+    let resultMock = result["mock"] as! [String: Any]
+    XCTAssertEqual(resultMock["error"] as! [String: String], ["A": "B"])
+  }
+}
+
+private enum TestError: Error {
+  case generic
 }

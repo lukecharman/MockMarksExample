@@ -4,41 +4,55 @@ import XCTest
 
 final class DataTaskTests: XCTestCase {
 
+  var mockedProcessInfo: MockProcessInfo!
+
+  override func setUp() {
+    super.setUp()
+    mockedProcessInfo = MockProcessInfo()
+  }
+
+  override func tearDown() {
+    mockedProcessInfo = nil
+    super.tearDown()
+  }
+
   func test_init_shouldStoreTask() {
     let task = URLSessionDataTask()
-    let MockMarksTask = MockMarks.DataTask(stubbing: task, completionHandler: { _, _ ,_ in })
-    XCTAssertIdentical(task, MockMarksTask.task)
+    let mockMarksTask = MockMarks.DataTask(mocking: task) { _, _ ,_ in }
+    XCTAssertIdentical(task, mockMarksTask.task)
   }
 
   func test_resume_shouldDeferToSuperclass_whenTaskHasNoURL() {
+    mockedProcessInfo.mockedIsRunningXCUI = true
+
     let task = MockURLSessionDataTask()
-    let MockMarksTask = MockMarks.DataTask(stubbing: task, completionHandler: { _, _, _ in})
-    MockMarksTask.resume()
+    let mockMarksTask = MockMarks.DataTask(mocking: task) { _, _, _ in }
+    mockMarksTask.resume(processInfo: mockedProcessInfo)
     XCTAssert(task.didCallResume)
   }
 
   func test_resume_shouldDeferToSuperclass_whenNotRunningXCUI() {
-    let task = MockURLSessionDataTask()
-    task.mockedCurrentRequest = URLRequest(url: URL(string: "A")!)
+    mockedProcessInfo.mockedIsRunningXCUI = false
 
-    let MockMarksTask = MockMarks.DataTask(stubbing: task, completionHandler: { _, _, _ in })
-    MockMarksTask.resume()
+    let task = MockURLSessionDataTask()
+    let mockMarksTask = MockMarks.DataTask(mocking: task) { _, _, _ in }
+    mockMarksTask.resume(processInfo: mockedProcessInfo)
     XCTAssert(task.didCallResume)
   }
 
   func test_resume_shouldDeferToSuperclass_whenNoQueuedResponseIsAvailable() {
-    XCUIChecker.isRunning = "true"
+    mockedProcessInfo.mockedIsRunningXCUI = true
 
     let task = MockURLSessionDataTask()
-    task.mockedCurrentRequest = URLRequest(url: URL(string: "A")!)
+    task.mockedCurrentRequest = URLRequest(url: URL(string: "http://no-mocks.for.me")!)
 
-    let MockMarksTask = MockMarks.DataTask(stubbing: task, completionHandler: { _, _, _ in })
-    MockMarksTask.resume()
+    let mockMarksTask = MockMarks.DataTask(mocking: task) { _, _, _ in }
+    mockMarksTask.resume(processInfo: mockedProcessInfo)
     XCTAssert(task.didCallResume)
   }
 
   func test_resume_shouldReturnNextStubbedResponse_whenAvailable() {
-    XCUIChecker.isRunning = "true"
+    mockedProcessInfo.mockedIsRunningXCUI = true
 
     let url = URL(string: "A")!
     let data = try! JSONSerialization.data(withJSONObject: ["A": "B"])
@@ -48,31 +62,19 @@ final class DataTaskTests: XCTestCase {
     let task = MockURLSessionDataTask()
     task.mockedCurrentRequest = URLRequest(url: url)
 
-    MockMarks.DataTask(stubbing: task) { data, _, _ in
+    MockMarks.DataTask(mocking: task) { data, _, _ in
       guard let data = data else {
         return XCTFail(#function)
       }
 
-      guard let json = try? JSONSerialization.jsonObject(with: data) as? [AnyHashable: Any] else {
+      guard let json = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else {
         return XCTFail(#function)
       }
 
       XCTAssertEqual(json["A"] as? String, "B")
-    }.resume()
+    }.resume(processInfo: mockedProcessInfo)
 
     XCTAssertFalse(task.didCallResume)
-  }
-
-  func test_resume_shouldDeferToSuperclass_whenRecording() {
-    XCUIChecker.isRunning = "false"
-    MockMarks.isRecording = true
-
-    let task = MockURLSessionDataTask()
-    task.mockedCurrentRequest = URLRequest(url: URL(string: "A")!)
-
-    let MockMarksTask = MockMarks.DataTask(stubbing: task, completionHandler: { _, _, _ in })
-    MockMarksTask.resume()
-    XCTAssert(task.didCallResume)
   }
 }
 

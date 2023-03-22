@@ -1,20 +1,18 @@
 import Foundation
 
 extension MockMarks {
-
   /// A subclass of `URLSession` which injects MockMarks's subclassed `URLSessionDataTask` objects.
   public class Session: URLSession {
-
     /// The underlying `URLSession` being stubbed.
     let urlSession: URLSession
 
-    /// Initialise a `Session` which wraps another `URLSession` and can stub its data tasks.
+    /// Initialise a `Session` which wraps another `URLSession` and can mock its data tasks.
     ///
     /// - Parameters:
     ///   - session: The underlying `URLSession` being stubbed.
     ///
-    /// - Returns: An instance of `Session` which will stub calls as requested.
-    public init(stubbing session: URLSession = .shared) {
+    /// - Returns: An instance of `Session` which will mock calls as requested.
+    public init(mocking session: URLSession = .shared) {
       self.urlSession = session
     }
 
@@ -31,13 +29,13 @@ extension MockMarks {
       completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void
     ) -> URLSessionDataTask {
       let superTask = urlSession.dataTask(with: request, completionHandler: { data, response, error in
-        if ProcessInfo.processInfo.environment[MockMarks.Constants.isRecording] == String(true), let url = request.url {
+        if MockMarks.shouldRecord(), let url = request.url {
           Recorder.record(url: url, data: data, response: response, error: error)
         }
         completionHandler(data, response, error)
       })
 
-      return DataTask(stubbing: superTask, completionHandler: completionHandler)
+      return DataTask(mocking: superTask, completionHandler: completionHandler)
     }
 
     /// Create a `MockMarksURLSessionDataTask` (as a standard `URLSessionDataTask`)
@@ -53,8 +51,8 @@ extension MockMarks {
       completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void
     ) -> URLSessionDataTask {
       DataTask(
-        stubbing: urlSession.dataTask(with: url, completionHandler: { data, response, error in
-          if ProcessInfo.processInfo.environment[MockMarks.Constants.isRecording] == String(true) {
+        mocking: urlSession.dataTask(with: url, completionHandler: { data, response, error in
+          if MockMarks.shouldRecord() {
             Recorder.record(url: url, data: data, response: response, error: error)
           }
           completionHandler(data, response, error)

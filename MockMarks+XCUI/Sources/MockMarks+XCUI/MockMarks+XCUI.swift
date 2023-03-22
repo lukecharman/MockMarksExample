@@ -14,9 +14,11 @@ open class MockMarksUITestCase: XCTestCase {
     if #available(iOS 16, *) {
       url = URL(string: path)!
         .deletingLastPathComponent()
-        .appending(path: "__Stubs__")
+        .appending(path: MockMarks.Constants.stubsFolder)
     } else {
-      url = URL(string: "A")!
+      url = URL(string: path)!
+        .deletingLastPathComponent()
+        .appendingPathComponent(MockMarks.Constants.stubsFolder)
     }
 
     app.launchEnvironment[MockMarks.Constants.isXCUI] = String(true)

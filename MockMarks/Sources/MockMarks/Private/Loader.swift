@@ -2,85 +2,61 @@ import Foundation
 
 extension MockMarks {
 
-  /// Used to load stubs from JSON files stored in the app bundle, and decode them.
+  /// Simple typealiases used to make this structure cleaner to read.
+  private typealias MockMarkDictionary = [String: Any]
+  private typealias MockMarkArray = [MockMarkDictionary]
+
+  /// Used to load mocks from JSON files, and decode them.
   struct Loader {
 
-    /// Looks for a JSON file with the given name, and decodes its contents into an array of mocked responses.
+    struct Constants {
+      static let url = "url"
+      static let mock = "mock"
+      static let json = "json"
+      static let error = "error"
+      static let statusCode = "statusCode"
+    }
+
+    /// Looks for a JSON file at the given URL, and decodes its contents into an array of mocked responses.
     ///
     /// - Parameters:
-    ///   - name: The filename to look for in the app bundle which contains ordered, stubbed responses.
-    ///   - bundle: The bundle in which to look for JSON stubs. Defaults to the app's main bundle.
+    ///   - url: The location at which to look for a JSON file containing ordered, mocked responses.
     ///
-    /// - Returns: An optional array of `MockMarksMockedResponse`s, read sequentially from the named JSON.
+    /// - Returns: An optional array of `MockMark`s, read sequentially from the named JSON.
     func loadJSON(from url: URL) -> [MockMark]? {
-      guard let data = loadJSONData(from: url) else {
-        return nil
-      }
+      guard let data = try? Data(contentsOf: url) else { return nil }
+      guard let json = try? JSONSerialization.jsonObject(with: data) as? MockMarkArray else { return nil }
 
-      guard let json = loadJSON(from: data) else {
-        return nil
-      }
+      var mocks = [MockMark]()
 
-      return parseStubs(from: json)
-    }
+      for dict in json {
+        guard let urlString = dict[Constants.url] as? String else { continue }
+        guard let url = URL(string: urlString) else { continue }
+        guard let mock = dict[Constants.mock] as? MockMarkDictionary else { continue }
 
-    /// Load JSON data from the given bundle of the given name.
-    ///
-    /// - Parameters:
-    ///   - url: The URL which contains ordered, stubbed responses.
-    ///
-    /// - Returns: An optional instance of `Data` containing the contents of the named file.
-    func loadJSONData(from url: URL) -> Data? {
-      try? Data(contentsOf: url)
-    }
-
-    /// Load JSON data structure from the given `Data` object.
-    ///
-    /// - Parameters:
-    ///   - data: The data to be converted to JSON.
-    ///
-    /// - Returns: An optional array of JSON dictionaries, each representing a stub, read sequentially from the named JSON.
-    func loadJSON(from data: Data) -> [[AnyHashable: Any]]? {
-      try? JSONSerialization.jsonObject(with: data) as? [[AnyHashable: Any]]
-    }
-
-    /// Parse stub JSON into `MockMark` objects.
-    ///
-    /// - Parameters:
-    ///   - json: The JSON to be read and parsed.
-    ///
-    /// - Returns: An array of `MockMark`s, each representing a stub.
-    func parseStubs(from json: [[AnyHashable: Any]]) -> [MockMark] {
-      var stubs = [MockMark]()
-
-      for i in 0..<json.count {
-        guard let string = json[i]["url"] as? String else {
-          continue
+        var jsonData: Data?
+        if let jsonObject = mock[Constants.json] {
+          jsonData = try? JSONSerialization.data(withJSONObject: jsonObject)
         }
 
-        guard let url = URL(string: string) else {
-          continue
-        }
-
-        guard let response = json[i]["mock"] as? [AnyHashable: Any] else {
-          continue
-        }
-
-        let mockMarkResponse = MockMark.Response(
-          data: try! JSONSerialization.data(withJSONObject: response["json"]!),
-          urlResponse: HTTPURLResponse(
+        mocks.append(
+          MockMark(
             url: url,
-            statusCode: response["statusCode"] as? Int ?? 200,
-            httpVersion: nil,
-            headerFields: nil
-          ),
-          error: nil
+            response: MockMark.Response(
+              data: jsonData,
+              urlResponse: HTTPURLResponse(
+                url: url,
+                statusCode: mock[Constants.statusCode] as? Int ?? 200,
+                httpVersion: nil,
+                headerFields: nil
+              ),
+              error: nil
+            )
+          )
         )
-
-        stubs.append(MockMark(url: url, response: mockMarkResponse))
       }
 
-      return stubs
+      return mocks
     }
   }
 }

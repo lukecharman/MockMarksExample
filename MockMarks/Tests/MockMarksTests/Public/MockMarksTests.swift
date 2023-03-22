@@ -10,17 +10,63 @@ final class MockMarksTests: XCTestCase {
   }
 
   func test_session_shouldBeStored() {
-    let session = MockMarks.Session(stubbing: .shared)
+    let session = MockMarks.Session(mocking: .shared)
     MockMarks.session = session
     XCTAssertEqual(MockMarks.session, session)
   }
 
-  func test_isXCUI_shouldReferToXCUIChecker() {
-    XCUIChecker.isRunning = String(true)
-    XCTAssert(MockMarks.isXCUI)
+  func test_isXCUI_shouldReferToProcessInfo_whenTrue() {
+    let mockedProcessInfo = MockProcessInfo()
+    mockedProcessInfo.mockedIsRunningXCUI = true
+    XCTAssert(MockMarks.isXCUI(processInfo: mockedProcessInfo))
+  }
 
-    XCUIChecker.isRunning = String(false)
-    XCTAssertFalse(MockMarks.isXCUI)
+  func test_isXCUI_shouldReferToProcessInfo_whenFalse() {
+    let mockedProcessInfo = MockProcessInfo()
+    mockedProcessInfo.mockedIsRunningXCUI = false
+    XCTAssertFalse(MockMarks.isXCUI(processInfo: mockedProcessInfo))
+  }
+
+  func test_setUp_shouldNotLoadJSON_whenXCUIIsNotRunning() {
+    let processInfo = MockProcessInfo()
+    processInfo.mockedIsRunningXCUI = false
+    MockMarks.setUp(processInfo: processInfo)
+    XCTAssert(MockMarks.queue.queuedResponses.isEmpty)
+  }
+
+  func test_setUp_shouldNotLoadJSON_whenStubDirectoryIsNotSet() {
+    let processInfo = MockProcessInfo()
+    processInfo.mockedEnvironment = [
+      MockMarks.Constants.isXCUI: String(true),
+      MockMarks.Constants.stubFilename: "B"
+    ]
+    MockMarks.setUp(processInfo: processInfo)
+    XCTAssert(MockMarks.queue.queuedResponses.isEmpty)
+  }
+
+  func test_setUp_shouldNotQueue_whenStubFilenameIsNotSet() {
+    let processInfo = MockProcessInfo()
+    processInfo.mockedEnvironment = [
+      MockMarks.Constants.isXCUI: String(true),
+      MockMarks.Constants.stubDirectory: "B"
+    ]
+    MockMarks.setUp(processInfo: processInfo)
+    XCTAssert(MockMarks.queue.queuedResponses.isEmpty)
+  }
+
+  func test_setUp_shouldLoadJSON_whenURLDoesContainJSON() {
+    let url = Bundle.module.url(forResource: "LoaderTests", withExtension: "json")
+    let dir = url?.deletingLastPathComponent()
+
+    let processInfo = MockProcessInfo()
+    processInfo.mockedEnvironment = [
+      MockMarks.Constants.isXCUI: String(true),
+      MockMarks.Constants.stubDirectory: dir!.absoluteString,
+      MockMarks.Constants.stubFilename: "LoaderTests.json"
+    ]
+
+    MockMarks.setUp(processInfo: processInfo)
+    XCTAssertFalse(MockMarks.queue.queuedResponses.isEmpty)
   }
 
   func test_dispatchNextQueuedResponse_shouldCallCompletion() {
@@ -30,60 +76,15 @@ final class MockMarksTests: XCTestCase {
 
     MockMarks.queue.queue(mockmark: mockmark)
     _ = MockMarks.dispatchNextQueuedResponse(for: url) { data, _, _ in
-      let json = try! JSONSerialization.jsonObject(with: data!, options: []) as! [AnyHashable: Any]
+      let json = try! JSONSerialization.jsonObject(with: data!, options: []) as! [String: Any]
       XCTAssertEqual(json["A"] as! String, "B")
     }
   }
+}
 
-  func test_setUp_shouldNotLoadJSON_whenXCUIIsNotRunning() {
-    let processInfo = MockProcessInfo()
-    processInfo.isRunningXCUI = false
-    MockMarks.setUp(processInfo: processInfo)
-    XCTAssert(MockMarks.queue.queuedResponses.isEmpty)
-  }
-
-  func test_setUp_shouldNotLoadJSON_whenNoFileToLoadIsSet() {
-    let processInfo = MockProcessInfo()
-    processInfo.mockedEnvironment = [MockMarks.Constants.isXCUI: String(true)]
-    MockMarks.setUp(processInfo: processInfo)
-    XCTAssert(MockMarks.queue.queuedResponses.isEmpty)
-  }
-
-  func test_setUp_shouldNotQueue_whenJSONFailsToLoad() {
-    let processInfo = MockProcessInfo()
-    processInfo.mockedEnvironment = [
-      MockMarks.Constants.isXCUI: String(true),
-      MockMarks.Constants.stubDirectory: "I Don't Exist"
-    ]
-    MockMarks.setUp(processInfo: processInfo)
-    XCTAssert(MockMarks.queue.queuedResponses.isEmpty)
-  }
-
-  func test_setUp_shouldLoadJSON_whenPathProvided_andPathIsValid() {
-//    let processInfo = MockProcessInfo()
-//    processInfo.isRunningXCUI = true
-//    MockMarks.setUp(processInfo: processInfo, bundle: .module)
-//    XCTAssertFalse(MockMarks.queue.queuedResponses.isEmpty)
-  }
+private extension MockMarksTests {
 
   var url: URL {
     URL(string: "A")!
-  }
-}
-
-class MockProcessInfo: ProcessInfo {
-  var didQueryInitialMockJSON = false
-  var isRunningXCUI = false
-  var mockedEnvironment: [String: String]?
-
-  override var environment: [String: String] {
-    if let mockedEnvironment {
-      return mockedEnvironment
-    } else {
-      return [
-        MockMarks.Constants.stubDirectory: "MockMarksTests",
-        MockMarks.Constants.isXCUI: String(isRunningXCUI)
-      ]
-    }
   }
 }

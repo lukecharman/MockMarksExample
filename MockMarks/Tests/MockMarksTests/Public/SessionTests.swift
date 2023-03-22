@@ -11,7 +11,7 @@ final class SessionTests: XCTestCase {
     super.setUp()
     mockURLSession = MockSession()
     MockMarks.Recorder.recordings.removeAll()
-    MockMarksSession = MockMarks.Session(stubbing: mockURLSession)
+    MockMarksSession = MockMarks.Session(mocking: mockURLSession)
   }
 
   override func tearDown() {
@@ -39,7 +39,7 @@ final class SessionTests: XCTestCase {
   // MARK: - init
 
   func test_init_shouldStoreURLSession() {
-    let sut = MockMarks.Session(stubbing: .shared)
+    let sut = MockMarks.Session(mocking: .shared)
     XCTAssertIdentical(sut.urlSession, URLSession.shared)
   }
 
@@ -61,7 +61,6 @@ final class SessionTests: XCTestCase {
   }
 
   func test_dataTaskWithURLRequest_shouldNotRecordWhenRecordingIsDisabled() {
-    MockMarks.isRecording = false
     _ = MockMarksSession.dataTask(with: url) { _, _, _ in }
     XCTAssert(mockURLSession.didCallDataTaskWithURL)
     XCTAssert(MockMarks.Recorder.recordings.isEmpty)
@@ -88,19 +87,19 @@ private class MockSession: URLSession {
   override func dataTask(with request: URLRequest, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
     didCallDataTaskWithURLRequest = true
     let task = URLSession.shared.dataTask(with: request, completionHandler: completionHandler)
-    return MockDataTask(stubbing: task, completionHandler: completionHandler)
+    return MockDataTask(mocking: task, completionHandler: completionHandler)
   }
 
   override func dataTask(with url: URL, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
     didCallDataTaskWithURL = true
     let task = URLSession.shared.dataTask(with: url, completionHandler: completionHandler)
-    return MockDataTask(stubbing: task, completionHandler: completionHandler)
+    return MockDataTask(mocking: task, completionHandler: completionHandler)
   }
 }
 
 private class MockDataTask: MockMarks.DataTask {
-  override init(stubbing task: URLSessionDataTask, completionHandler: @escaping MockMarks.DataTask.CompletionHandler) {
-    super.init(stubbing: task, completionHandler: completionHandler)
+  override init(mocking task: URLSessionDataTask, completionHandler: @escaping MockMarks.DataTask.CompletionHandler) {
+    super.init(mocking: task, completionHandler: completionHandler)
     completionHandler(("Test".data(using: .utf16)!, nil, nil))
   }
 }

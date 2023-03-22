@@ -38,6 +38,10 @@ struct MockMark {
       mock["responseCode"] = code
     }
 
+    if let error = response.error {
+      mock["error"] = error
+    }
+
     json["mock"] = mock
 
     return json

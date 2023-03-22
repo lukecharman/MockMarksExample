@@ -2,18 +2,17 @@ import Foundation
 
 extension MockMarks {
 
-  /// Used to queue stubbed responses to calls to various endpoints.
+  /// Used to queue mocked responses to calls to various endpoints.
   class Queue {
 
-    /// A set of responses. Calls to URLs matching the keys will sequentially be stubbed with data in the response.
+    /// A set of responses. Calls to URLs matching the keys will sequentially be mocked with data in the response.
     var queuedResponses = [URL: [MockMark.Response]]()
 
-    /// Queues a provided response to a given URL. With this function, you can stub the data returned, as well as the
+    /// Queues a provided response to a given URL. With this function, you can mock the data returned, as well as the
     /// `URLResponse` and any potential `Error`s, to see how your app handles them.
     ///
     /// - Parameters:
-    ///   - response: The response to be returned.
-    ///   - url: The url for which `response` will return.
+    ///   - mockmark: The `MockMark` containing URL and response information for the mock.
     func queue(mockmark: MockMark) {
       if queuedResponses[mockmark.url] == nil {
         queuedResponses[mockmark.url] = []
