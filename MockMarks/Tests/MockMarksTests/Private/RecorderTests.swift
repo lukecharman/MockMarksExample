@@ -58,5 +58,18 @@ final class RecorderTests: XCTestCase {
     XCTAssertEqual(mock["responseCode"] as! Int, 123)
   }
 
-  // TODO: Test writeRecordings here.
+  func test_record_shouldAskWriterToWrite() {
+    let writer = MockWriter()
+    let recorder = MockMarks.Recorder(writer: writer)
+    recorder.record(url: URL(string: "A")!, data: nil, response: nil, error: nil)
+    XCTAssert(writer.writeWasCalled)
+  }
+}
+
+private class MockWriter: WriterInterface {
+  var writeWasCalled = false
+
+  func write(recordings: [[String : Any]]) {
+    writeWasCalled = true
+  }
 }

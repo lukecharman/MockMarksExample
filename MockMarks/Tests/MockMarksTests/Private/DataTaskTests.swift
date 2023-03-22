@@ -22,6 +22,13 @@ final class DataTaskTests: XCTestCase {
     XCTAssertIdentical(task, mockMarksTask.task)
   }
 
+  func test_overriddenResume_shouldCallInternalResume() {
+    let task = MockURLSessionDataTask()
+    let mockMarksTask = MockMarks.DataTask(mocking: task) { _, _ ,_ in }
+    mockMarksTask.resume()
+    XCTAssert(task.didCallResume)
+  }
+
   func test_resume_shouldDeferToSuperclass_whenTaskHasNoURL() {
     mockedProcessInfo.mockedIsRunningXCUI = true
 

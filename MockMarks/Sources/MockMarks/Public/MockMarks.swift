@@ -28,12 +28,8 @@ public class MockMarks {
     guard let directory = processInfo.environment[MockMarks.Constants.stubDirectory] else { return }
     guard let filename = processInfo.environment[MockMarks.Constants.stubFilename] else { return }
 
-    let url: URL
-    if #available(iOS 16, *) {
-      url = URL(filePath: directory).appending(path: filename)
-    } else {
-      url = URL(fileURLWithPath: directory).appendingPathComponent(filename)
-    }
+    var url = URL(safePath: directory)
+    url.safeAppend(path: filename)
 
     guard let json = loader.loadJSON(from: url) else { return }
 

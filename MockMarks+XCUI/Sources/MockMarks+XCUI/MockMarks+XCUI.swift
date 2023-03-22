@@ -1,5 +1,5 @@
-import MockMarks
 import XCTest
+@testable import MockMarks
 
 open class MockMarksUITestCase: XCTestCase {
 
@@ -10,23 +10,11 @@ open class MockMarksUITestCase: XCTestCase {
 
     app = XCUIApplication()
 
-    let url: URL
-    if #available(iOS 16, *) {
-      url = URL(string: path)!
-        .deletingLastPathComponent()
-        .appending(path: MockMarks.Constants.stubsFolder)
-    } else {
-      url = URL(string: path)!
-        .deletingLastPathComponent()
-        .appendingPathComponent(MockMarks.Constants.stubsFolder)
-    }
+    var url = URL(string: path)!.deletingLastPathComponent()
+    url.safeAppend(path: MockMarks.Constants.stubsFolder)
 
+    app.launchEnvironment[MockMarks.Constants.isRecording] = String(recording)
     app.launchEnvironment[MockMarks.Constants.isXCUI] = String(true)
-
-    if recording {
-      app.launchEnvironment[MockMarks.Constants.isRecording] = String(true)
-    }
-
     app.launchEnvironment[MockMarks.Constants.stubDirectory] = url.absoluteString
     app.launchEnvironment[MockMarks.Constants.stubFilename] = "\(stubName).json"
 

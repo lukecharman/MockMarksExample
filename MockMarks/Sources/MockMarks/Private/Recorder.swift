@@ -14,9 +14,11 @@ extension MockMarks {
     var recordings = [[String: Any]]()
 
     private let processInfo: ProcessInfo
+    private let writer: WriterInterface
 
-    init(processInfo: ProcessInfo = .processInfo) {
+    init(processInfo: ProcessInfo = .processInfo, writer: WriterInterface = Writer()) {
       self.processInfo = processInfo
+      self.writer = writer
     }
 
     /// Whether or not the app is running in the context of recording tests, as determined by
@@ -49,42 +51,7 @@ extension MockMarks {
 
       recordings.insert(mockmark.asJSON, at: 0)
 
-      writeRecordings()
+      try? writer.write(recordings: recordings)
     }
-  }
-}
-
-private extension MockMarks.Recorder {
-
-  /// Write the current array of recordings to disk.
-  func writeRecordings(fileManager: FileManager = .default) {
-    guard let path = processInfo.environment[MockMarks.Constants.stubDirectory] else {
-      return
-    }
-
-    guard let file = processInfo.environment[MockMarks.Constants.stubFilename] else {
-      return
-    }
-
-    guard let data = try? JSONSerialization.data(withJSONObject: recordings) else {
-      return
-    }
-
-    var url: URL
-    if #available(iOS 16, *) {
-      url = URL(filePath: path)
-    } else {
-      url = URL(fileURLWithPath: path)
-    }
-
-    try? fileManager.createDirectory(at: url, withIntermediateDirectories: true)
-
-    if #available(iOS 16, *) {
-      url.append(path: file)
-    } else {
-      url.appendPathComponent(file)
-    }
-
-    try? data.write(to: url)
   }
 }
