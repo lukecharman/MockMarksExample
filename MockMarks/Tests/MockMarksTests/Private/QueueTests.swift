@@ -4,11 +4,11 @@ import XCTest
 
 final class QueueTests: XCTestCase {
 
-  var queue: MockMarks.Queue!
+  var queue: Queue!
 
   override func setUp() {
     super.setUp()
-    queue = MockMarks.Queue()
+    queue = Queue()
   }
 
   override func tearDown() {

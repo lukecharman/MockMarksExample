@@ -7,29 +7,29 @@ final class RecorderTests: XCTestCase {
   func test_shouldRecord_shouldReadFromProcessInfo_whenTrue() {
     let info = MockProcessInfo()
     info.mockedEnvironment = [MockMarks.Constants.isRecording: String(true)]
-    XCTAssert(MockMarks.Recorder(processInfo: info).shouldRecord)
+    XCTAssert(Recorder(processInfo: info).shouldRecord)
   }
 
   func test_shouldRecord_shouldReadFromProcessInfo_whenFalse() {
     let info = MockProcessInfo()
     info.mockedEnvironment = [MockMarks.Constants.isRecording: String(false)]
-    XCTAssertFalse(MockMarks.Recorder(processInfo: info).shouldRecord)
+    XCTAssertFalse(Recorder(processInfo: info).shouldRecord)
   }
 
   func test_shouldRecord_shouldDefaultToFalse_whenEnvironmentVariableIsNotSet() {
     let info = MockProcessInfo()
     info.mockedEnvironment = [:]
-    XCTAssertFalse(MockMarks.Recorder(processInfo: info).shouldRecord)
+    XCTAssertFalse(Recorder(processInfo: info).shouldRecord)
   }
 
   func test_record_shouldInsertNewRecording() {
-    let recorder = MockMarks.Recorder()
+    let recorder = Recorder()
     recorder.record(url: URL(string: "A")!, data: nil, response: nil, error: nil)
     XCTAssertFalse(recorder.recordings.isEmpty)
   }
 
   func test_record_shouldInsertMultipleRecordings() {
-    let recorder = MockMarks.Recorder()
+    let recorder = Recorder()
     recorder.record(url: URL(string: "A")!, data: nil, response: nil, error: nil)
     recorder.record(url: URL(string: "A")!, data: nil, response: nil, error: nil)
     recorder.record(url: URL(string: "A")!, data: nil, response: nil, error: nil)
@@ -37,7 +37,7 @@ final class RecorderTests: XCTestCase {
   }
 
   func test_record_shouldRecordValidMockMark() {
-    let recorder = MockMarks.Recorder()
+    let recorder = Recorder()
     let url = URL(string: "A")!
     let data = try! JSONSerialization.data(withJSONObject: ["A": "B"])
     let response = HTTPURLResponse(url: url, statusCode: 123, httpVersion: nil, headerFields: nil)
@@ -60,7 +60,7 @@ final class RecorderTests: XCTestCase {
 
   func test_record_shouldAskWriterToWrite() {
     let writer = MockWriter()
-    let recorder = MockMarks.Recorder(writer: writer)
+    let recorder = Recorder(writer: writer)
     recorder.record(url: URL(string: "A")!, data: nil, response: nil, error: nil)
     XCTAssert(writer.writeWasCalled)
   }

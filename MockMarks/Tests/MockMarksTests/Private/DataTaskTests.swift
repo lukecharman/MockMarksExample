@@ -18,13 +18,13 @@ final class DataTaskTests: XCTestCase {
 
   func test_init_shouldStoreTask() {
     let task = URLSessionDataTask()
-    let mockMarksTask = MockMarks.DataTask(mocking: task) { _, _ ,_ in }
+    let mockMarksTask = DataTask(mocking: task) { _, _ ,_ in }
     XCTAssertIdentical(task, mockMarksTask.task)
   }
 
   func test_overriddenResume_shouldCallInternalResume() {
     let task = MockURLSessionDataTask()
-    let mockMarksTask = MockMarks.DataTask(mocking: task) { _, _ ,_ in }
+    let mockMarksTask = DataTask(mocking: task) { _, _ ,_ in }
     mockMarksTask.resume()
     XCTAssert(task.didCallResume)
   }
@@ -33,7 +33,7 @@ final class DataTaskTests: XCTestCase {
     mockedProcessInfo.mockedIsRunningXCUI = true
 
     let task = MockURLSessionDataTask()
-    let mockMarksTask = MockMarks.DataTask(mocking: task) { _, _, _ in }
+    let mockMarksTask = DataTask(mocking: task) { _, _, _ in }
     mockMarksTask.resume(processInfo: mockedProcessInfo)
     XCTAssert(task.didCallResume)
   }
@@ -42,7 +42,7 @@ final class DataTaskTests: XCTestCase {
     mockedProcessInfo.mockedIsRunningXCUI = false
 
     let task = MockURLSessionDataTask()
-    let mockMarksTask = MockMarks.DataTask(mocking: task) { _, _, _ in }
+    let mockMarksTask = DataTask(mocking: task) { _, _, _ in }
     mockMarksTask.resume(processInfo: mockedProcessInfo)
     XCTAssert(task.didCallResume)
   }
@@ -53,7 +53,7 @@ final class DataTaskTests: XCTestCase {
     let task = MockURLSessionDataTask()
     task.mockedCurrentRequest = URLRequest(url: URL(string: "http://no-mocks.for.me")!)
 
-    let mockMarksTask = MockMarks.DataTask(mocking: task) { _, _, _ in }
+    let mockMarksTask = DataTask(mocking: task) { _, _, _ in }
     mockMarksTask.resume(processInfo: mockedProcessInfo)
     XCTAssert(task.didCallResume)
   }
@@ -69,7 +69,7 @@ final class DataTaskTests: XCTestCase {
     let task = MockURLSessionDataTask()
     task.mockedCurrentRequest = URLRequest(url: url)
 
-    MockMarks.DataTask(mocking: task) { data, _, _ in
+    DataTask(mocking: task) { data, _, _ in
       guard let data = data else {
         return XCTFail(#function)
       }

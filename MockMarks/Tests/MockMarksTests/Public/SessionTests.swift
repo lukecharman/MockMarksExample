@@ -5,13 +5,13 @@ import XCTest
 final class SessionTests: XCTestCase {
 
   private var mockURLSession: MockSession!
-  private var mockMarksSession: MockMarks.Session!
+  private var mockMarksSession: Session!
 
   override func setUp() {
     super.setUp()
     mockURLSession = MockSession()
     MockMarks.shared.recorder.recordings.removeAll()
-    mockMarksSession = MockMarks.Session(mocking: mockURLSession)
+    mockMarksSession = Session(mocking: mockURLSession)
   }
 
   override func tearDown() {
@@ -39,7 +39,7 @@ final class SessionTests: XCTestCase {
   // MARK: - init
 
   func test_init_shouldStoreURLSession() {
-    let sut = MockMarks.Session(mocking: .shared)
+    let sut = Session(mocking: .shared)
     XCTAssertIdentical(sut.urlSession, URLSession.shared)
   }
 
@@ -47,7 +47,7 @@ final class SessionTests: XCTestCase {
 
   func test_dataTaskWithURLRequest_shouldReturnAppropriateSubclass() {
     let task = mockMarksSession.dataTask(with: urlRequest, completionHandler: completion)
-    XCTAssert(task is MockMarks.DataTask)
+    XCTAssert(task is DataTask)
   }
 
   func test_dataTaskWithURLRequest_shouldDeferCompletionHandlerToSuperclass() {
@@ -111,8 +111,8 @@ private class MockSession: URLSession {
   }
 }
 
-private class MockDataTask: MockMarks.DataTask {
-  override init(mocking task: URLSessionDataTask, completionHandler: @escaping MockMarks.DataTask.CompletionHandler) {
+private class MockDataTask: DataTask {
+  override init(mocking task: URLSessionDataTask, completionHandler: @escaping DataTask.CompletionHandler) {
     super.init(mocking: task, completionHandler: completionHandler)
     completionHandler(("Test".data(using: .utf16)!, nil, nil))
   }

@@ -8,10 +8,10 @@ open class MockMarksUITestCase: XCTestCase {
   public func setUp(path: String = #filePath, recording: Bool) {
     super.setUp()
 
-    app = XCUIApplication()
-
     var url = URL(string: path)!.deletingLastPathComponent()
     url.safeAppend(path: MockMarks.Constants.mocksFolder)
+
+    app = XCUIApplication()
 
     app.launchEnvironment[MockMarks.Constants.isRecording] = String(recording)
     app.launchEnvironment[MockMarks.Constants.isXCUI] = String(true)

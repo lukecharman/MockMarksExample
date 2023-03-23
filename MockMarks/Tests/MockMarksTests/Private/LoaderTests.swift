@@ -4,12 +4,12 @@ import XCTest
 
 final class LoaderTests: XCTestCase {
 
-  private var loader: MockMarks.Loader!
+  private var loader: Loader!
 
   override func setUp() {
     super.setUp()
 
-    loader = MockMarks.Loader()
+    loader = Loader()
   }
 
   override func tearDown() {

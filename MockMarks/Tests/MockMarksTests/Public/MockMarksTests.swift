@@ -24,7 +24,7 @@ final class MockMarksTests: XCTestCase {
   func test_setUp_shouldNotLoadJSON_whenXCUIIsNotRunning() {
     let processInfo = MockProcessInfo()
     processInfo.mockedIsRunningXCUI = false
-    MockMarks.shared.setUp(session: MockMarks.Session(), processInfo: processInfo)
+    MockMarks.shared.setUp(session: Session(), processInfo: processInfo)
     XCTAssert(MockMarks.shared.queue.queuedResponses.isEmpty)
   }
 
@@ -34,7 +34,7 @@ final class MockMarksTests: XCTestCase {
       MockMarks.Constants.isXCUI: String(true),
       MockMarks.Constants.mockFilename: "B"
     ]
-    MockMarks.shared.setUp(session: MockMarks.Session(), processInfo: processInfo)
+    MockMarks.shared.setUp(session: Session(), processInfo: processInfo)
     XCTAssert(MockMarks.shared.queue.queuedResponses.isEmpty)
   }
 
@@ -44,7 +44,7 @@ final class MockMarksTests: XCTestCase {
       MockMarks.Constants.isXCUI: String(true),
       MockMarks.Constants.mockDirectory: "B"
     ]
-    MockMarks.shared.setUp(session: MockMarks.Session(), processInfo: processInfo)
+    MockMarks.shared.setUp(session: Session(), processInfo: processInfo)
     XCTAssert(MockMarks.shared.queue.queuedResponses.isEmpty)
   }
 
@@ -59,7 +59,7 @@ final class MockMarksTests: XCTestCase {
       MockMarks.Constants.mockFilename: "LoaderTests.json"
     ]
 
-    MockMarks.shared.setUp(session: MockMarks.Session(), processInfo: processInfo)
+    MockMarks.shared.setUp(session: Session(), processInfo: processInfo)
     XCTAssertFalse(MockMarks.shared.queue.queuedResponses.isEmpty)
   }
 
