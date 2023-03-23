@@ -58,7 +58,7 @@ final class DataTaskTests: XCTestCase {
     XCTAssert(task.didCallResume)
   }
 
-  func test_resume_shouldReturnNextStubbedResponse_whenAvailable() {
+  func test_resume_shouldReturnNextMockedResponse_whenAvailable() {
     mockedProcessInfo.mockedIsRunningXCUI = true
 
     let url = URL(string: "A")!

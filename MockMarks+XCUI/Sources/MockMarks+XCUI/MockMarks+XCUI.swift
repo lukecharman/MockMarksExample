@@ -11,12 +11,12 @@ open class MockMarksUITestCase: XCTestCase {
     app = XCUIApplication()
 
     var url = URL(string: path)!.deletingLastPathComponent()
-    url.safeAppend(path: MockMarks.Constants.stubsFolder)
+    url.safeAppend(path: MockMarks.Constants.mocksFolder)
 
     app.launchEnvironment[MockMarks.Constants.isRecording] = String(recording)
     app.launchEnvironment[MockMarks.Constants.isXCUI] = String(true)
-    app.launchEnvironment[MockMarks.Constants.stubDirectory] = url.absoluteString
-    app.launchEnvironment[MockMarks.Constants.stubFilename] = "\(stubName).json"
+    app.launchEnvironment[MockMarks.Constants.mockDirectory] = url.absoluteString
+    app.launchEnvironment[MockMarks.Constants.mockFilename] = "\(mockName).json"
 
     app.launch()
   }
@@ -24,7 +24,7 @@ open class MockMarksUITestCase: XCTestCase {
 
 public extension MockMarksUITestCase {
 
-  var stubName: String {
+  var mockName: String {
     name
       .split(separator: " ")
       .last!

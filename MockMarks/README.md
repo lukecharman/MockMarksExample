@@ -6,10 +6,10 @@
 
 ## What is MockMarks?
 
-MockMarks is a pair of Swift packages used to easily create local, stubbed responses to network calls made via `URLSession`. These are managed entirely within Xcode, and no HTTP server or other intermediary is required. Using MockMarks, you can:
+MockMarks is a pair of Swift packages used to easily create local, mocked responses to network calls made via `URLSession`. These are managed entirely within Xcode, and no HTTP server or other intermediary is required. Using MockMarks, you can:
 
-* Queue specific stubbed JSON responses to requests to specific endpoint URLs.
-* Return those stubbed responses in the order they were queued to create a flow.
+* Queue specific mocked JSON responses to requests to specific endpoint URLs.
+* Return those mocked responses in the order they were queued to create a flow.
 * Use `URLSession` as normal in your app's features, meaning MockMarks is not exposed to your features internally.
 
 ## How does it work?
@@ -23,32 +23,32 @@ MockMarks is a pair of Swift packages used to easily create local, stubbed respo
   ```
   if MockMarks.isXCUITest {
     MockMarks.setUp()
-    MockMarks.session = MockMarks.Session(stubbing: .shared) 
+    MockMarks.session = MockMarks.Session(mocking: .shared) 
   }
   ```
 * When you use `URLSession` in your app, use `MockMarks.session` instead:
   ```
   SomeRandomViewModel(urlSession: MockMarks.session ?? .shared)
   ```
-* Inside your app target, create your stub JSON files (more info on this coming!)
+* Inside your app target, create your mock JSON files (more info on this coming!)
   ```
   [
     {
-      "url": "https://the-endpoint/you/wanna/stub",
-      "stub": {
-        "yourStubbedResponse": "goesHere"
+      "url": "https://the-endpoint/you/wanna/mock",
+      "mock": {
+        "yourMockedResponse": "goesHere"
       }
     }
   ]
   ```
 * In your UI test target, have the test classes inherit from `MockMarksUITestCase`.
-* In the actual tests, launch the app with the name of the stubs file to use for this test.
-  Here, we'd name the stub file in the app target "test_aThing_doesAnotherThing().json"
+* In the actual tests, launch the app with the name of the mocks file to use for this test.
+  Here, we'd name the mock file in the app target "test_aThing_doesAnotherThing().json"
   ```
   class MockMarksExampleUITests: MockMarksUITestCase {
     func test_aThing_doesAnotherThing() {
-      launchApp(withStubsNamed: #function)
-      XCTAssert(self.app.staticTexts["STUBBED"].waitForExistence(timeout: 5))
+      launchApp(withMocksNamed: #function)
+      XCTAssert(self.app.staticTexts["MOCKED"].waitForExistence(timeout: 5))
     }
   }
   ```

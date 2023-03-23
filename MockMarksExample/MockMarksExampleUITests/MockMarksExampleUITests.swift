@@ -10,29 +10,29 @@ class MockMarksExampleUITests: MockMarksUITestCase {
   }
 
   func test_singleResponse() {
-    XCTAssert(stubbedText.waitForExistence(timeout: 1))
+    XCTAssert(mockedText.waitForExistence(timeout: 1))
   }
 
-  func test_singleStubbedResponse() {
-    XCTAssert(stubbedText.waitForExistence(timeout: 1))
+  func test_singleMockedResponse() {
+    XCTAssert(mockedText.waitForExistence(timeout: 1))
     loadWordButton.tap()
-    XCTAssert(stubbedText.waitForNonExistence(timeout: 1))
+    XCTAssert(mockedText.waitForNonExistence(timeout: 1))
   }
 
-  func test_twoStubbedResponsesToTheSameEndpoint() {
-    XCTAssert(stubbedText.waitForExistence(timeout: 1))
+  func test_twoMockedResponsesToTheSameEndpoint() {
+    XCTAssert(mockedText.waitForExistence(timeout: 1))
     loadWordButton.tap()
-    XCTAssert(stubbedAgainText.waitForExistence(timeout: 1))
+    XCTAssert(mockedAgainText.waitForExistence(timeout: 1))
     loadWordButton.tap()
-    XCTAssert(stubbedAgainText.waitForNonExistence(timeout: 1))
+    XCTAssert(mockedAgainText.waitForNonExistence(timeout: 1))
   }
 
-  func test_twoStubbedResponsesToTwoDifferentEndpoints() {
-    XCTAssert(stubbedText.waitForExistence(timeout: 1))
+  func test_twoMockedResponsesToTwoDifferentEndpoints() {
+    XCTAssert(mockedText.waitForExistence(timeout: 1))
     loadWordButton.tap()
-    XCTAssert(stubbedText.waitForNonExistence(timeout: 1))
+    XCTAssert(mockedText.waitForNonExistence(timeout: 1))
     loadLanguageButton.tap()
-    XCTAssert(stubbedTooText.waitForNonExistence(timeout: 1))
+    XCTAssert(mockedTooText.waitForNonExistence(timeout: 1))
   }
 }
 
@@ -46,16 +46,16 @@ private extension MockMarksExampleUITests {
     app.buttons["Load_Language_Button"]
   }
 
-  var stubbedText: XCUIElement {
-    app.staticTexts["STUBBED"]
+  var mockedText: XCUIElement {
+    app.staticTexts["MOCKED"]
   }
 
-  var stubbedTooText: XCUIElement {
-    app.staticTexts["STUBBED TOO"]
+  var mockedTooText: XCUIElement {
+    app.staticTexts["MOCKED TOO"]
   }
 
-  var stubbedAgainText: XCUIElement {
-    app.staticTexts["STUBBED AGAIN"]
+  var mockedAgainText: XCUIElement {
+    app.staticTexts["MOCKED AGAIN"]
   }
 }
 

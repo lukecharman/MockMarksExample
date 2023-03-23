@@ -10,7 +10,7 @@ class MockProcessInfo: ProcessInfo {
       return mockedEnvironment
     } else {
       return [
-        MockMarks.Constants.stubDirectory: "MockMarksTests",
+        MockMarks.Constants.mockDirectory: "MockMarksTests",
         MockMarks.Constants.isXCUI: String(mockedIsRunningXCUI)
       ]
     }

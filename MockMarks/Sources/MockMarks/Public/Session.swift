@@ -17,7 +17,7 @@ public protocol SessionInterface {
 extension MockMarks {
   /// A subclass of `URLSession` which injects MockMarks's subclassed `URLSessionDataTask` objects.
   public class Session: URLSession, SessionInterface {
-    /// The underlying `URLSession` being stubbed.
+    /// The underlying `URLSession` being mocked.
     let urlSession: URLSession
 
     /// Used to record responses from calls made to this session.
@@ -26,7 +26,7 @@ extension MockMarks {
     /// Initialise a `Session` which wraps another `URLSession` and can mock its data tasks.
     ///
     /// - Parameters:
-    ///   - session: The underlying `URLSession` being stubbed.
+    ///   - session: The underlying `URLSession` being mocked.
     ///
     /// - Returns: An instance of `Session` which will mock calls as requested.
     required public init(mocking session: URLSession = .shared) {
@@ -34,11 +34,11 @@ extension MockMarks {
     }
 
     /// Create a `MockMarksURLSessionDataTask` (as a standard `URLSessionDataTask`)
-    /// which can be used to return stubbed responses from the response queue.
+    /// which can be used to return mocked responses from the response queue.
     ///
     /// - Parameters:
-    ///   - request: The request to be stubbed.
-    ///   - completionHandler: A callback which will be called with eithert stubbed or real data.
+    ///   - request: The request to be mocked.
+    ///   - completionHandler: A callback which will be called with eithert mocked or real data.
     ///
     /// - Returns: An instance of `MockMarksURLSessionDataTask` typed as a `URLSessionDataTask`.
     override public func dataTask(
@@ -57,11 +57,11 @@ extension MockMarks {
     }
 
     /// Create a `MockMarksURLSessionDataTask` (as a standard `URLSessionDataTask`)
-    /// which can be used to return stubbed responses from the response queue.
+    /// which can be used to return mocked responses from the response queue.
     ///
     /// - Parameters:
-    ///   - url: The URL from which responses will be stubbed.
-    ///   - completionHandler: A callback which will be called with eithert stubbed or real data.
+    ///   - url: The URL from which responses will be mocked.
+    ///   - completionHandler: A callback which will be called with eithert mocked or real data.
     ///
     /// - Returns: An instance of `MockMarksURLSessionDataTask` typed as a `URLSessionDataTask`.
     override public func dataTask(

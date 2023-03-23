@@ -41,10 +41,10 @@ class Writer: WriterInterface {
 private extension Writer {
 
   var path: String? {
-    processInfo.environment[MockMarks.Constants.stubDirectory]
+    processInfo.environment[MockMarks.Constants.mockDirectory]
   }
 
   var file: String? {
-    processInfo.environment[MockMarks.Constants.stubFilename]
+    processInfo.environment[MockMarks.Constants.mockFilename]
   }
 }

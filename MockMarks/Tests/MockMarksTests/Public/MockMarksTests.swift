@@ -28,21 +28,21 @@ final class MockMarksTests: XCTestCase {
     XCTAssert(MockMarks.shared.queue.queuedResponses.isEmpty)
   }
 
-  func test_setUp_shouldNotLoadJSON_whenStubDirectoryIsNotSet() {
+  func test_setUp_shouldNotLoadJSON_whenMockDirectoryIsNotSet() {
     let processInfo = MockProcessInfo()
     processInfo.mockedEnvironment = [
       MockMarks.Constants.isXCUI: String(true),
-      MockMarks.Constants.stubFilename: "B"
+      MockMarks.Constants.mockFilename: "B"
     ]
     MockMarks.shared.setUp(session: MockMarks.Session(), processInfo: processInfo)
     XCTAssert(MockMarks.shared.queue.queuedResponses.isEmpty)
   }
 
-  func test_setUp_shouldNotQueue_whenStubFilenameIsNotSet() {
+  func test_setUp_shouldNotQueue_whenMockFilenameIsNotSet() {
     let processInfo = MockProcessInfo()
     processInfo.mockedEnvironment = [
       MockMarks.Constants.isXCUI: String(true),
-      MockMarks.Constants.stubDirectory: "B"
+      MockMarks.Constants.mockDirectory: "B"
     ]
     MockMarks.shared.setUp(session: MockMarks.Session(), processInfo: processInfo)
     XCTAssert(MockMarks.shared.queue.queuedResponses.isEmpty)
@@ -55,8 +55,8 @@ final class MockMarksTests: XCTestCase {
     let processInfo = MockProcessInfo()
     processInfo.mockedEnvironment = [
       MockMarks.Constants.isXCUI: String(true),
-      MockMarks.Constants.stubDirectory: dir!.absoluteString,
-      MockMarks.Constants.stubFilename: "LoaderTests.json"
+      MockMarks.Constants.mockDirectory: dir!.absoluteString,
+      MockMarks.Constants.mockFilename: "LoaderTests.json"
     ]
 
     MockMarks.shared.setUp(session: MockMarks.Session(), processInfo: processInfo)

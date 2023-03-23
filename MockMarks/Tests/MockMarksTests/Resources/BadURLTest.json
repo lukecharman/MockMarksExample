@@ -3,7 +3,7 @@
     "url": "🤣",
     "mock": {
       "json": [
-        "STUBBED OR WHATEVER"
+        "MOCKED OR WHATEVER"
       ],
       "responseCode": 200,
       "httpVersion": null,

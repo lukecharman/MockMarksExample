@@ -1,25 +1,25 @@
 import Foundation
 
 extension MockMarks {
-  /// A subclass of `URLSessionDataTask` which checks for stubbed responses. If stubs are found, they will be
-  /// passed to the completion handler. If stubs are not found, the superclass will handle the function as standard.
+  /// A subclass of `URLSessionDataTask` which checks for mocked responses. If mocks are found, they will be
+  /// passed to the completion handler. If mocks are not found, the superclass will handle the function as standard.
   class DataTask: URLSessionDataTask {
     /// Internal extensions used for cleaner-to-read code.
     typealias CompletionHandler = ((Data?, URLResponse?, Error?)) -> Void
 
-    /// The underlying `URLSessionDataTask` being stubbed.
+    /// The underlying `URLSessionDataTask` being mocked.
     let task: URLSessionDataTask
 
-    /// The closure which will be called, with either stubbed or real data.
+    /// The closure which will be called, with either mocked or real data.
     let completionHandler: CompletionHandler
 
     /// Initialise a `DataTask` which wraps another `URLSessionDataTask` and can mock it.
     ///
     /// - Parameters:
-    ///   - task: The underlying `URLSessionDataTask` being stubbed.
-    ///   - completionHandler: The closure which will be called, with either stubbed or real data.
+    ///   - task: The underlying `URLSessionDataTask` being mocked.
+    ///   - completionHandler: The closure which will be called, with either mocked or real data.
     ///
-    /// - Returns: An instance of `DataTask` which will stub calls if mocked data exists.
+    /// - Returns: An instance of `DataTask` which will mock calls if mocked data exists.
     init(mocking task: URLSessionDataTask, completionHandler: @escaping CompletionHandler) {
       self.task = task
       self.completionHandler = completionHandler

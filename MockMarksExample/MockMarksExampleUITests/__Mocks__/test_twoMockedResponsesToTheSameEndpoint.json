@@ -1,0 +1,1 @@
+[{"url":"https:\/\/random-word-api.herokuapp.com\/word","mock":{"responseCode":200,"json":["MOCKED"]}},{"url":"https:\/\/random-word-api.herokuapp.com\/word","mock":{"responseCode":200,"json":["MOCKED AGAIN"]}},{"url":"https:\/\/random-word-api.herokuapp.com\/word","mock":{"json":["knottier"],"responseCode":200}}]
