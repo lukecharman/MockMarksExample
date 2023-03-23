@@ -15,22 +15,22 @@ final class MockMarkTests: XCTestCase {
 
   func test_json_shouldReturnJSON_whenThereIsValidData() {
     let sourceJSON = ["A": "B"]
-    let data = try! JSONSerialization.data(withJSONObject: sourceJSON)
+    let data = try? JSONSerialization.data(withJSONObject: sourceJSON)
     let response = MockMark.Response(data: data, urlResponse: nil, error: nil)
-    XCTAssertEqual(response.json as! [String: String], sourceJSON)
+    XCTAssertEqual(response.json as? [String: String], sourceJSON)
   }
 
   func test_asJSON_shouldReturnMockWithContents_whenResponseHasData() {
     let sourceJSON = ["A": "B"]
-    let data = try! JSONSerialization.data(withJSONObject: sourceJSON)
+    let data = try? JSONSerialization.data(withJSONObject: sourceJSON)
     let mockMark = MockMark(
       url: URL(string: "A")!,
       response: MockMark.Response(data: data, urlResponse: nil, error: nil)
     )
 
     let result = mockMark.asJSON
-    let resultMock = result["mock"] as! [String: Any]
-    XCTAssertEqual(resultMock["json"] as! [String: String], sourceJSON)
+    let resultMock = result["mock"] as? [String: Any]
+    XCTAssertEqual(resultMock?["json"] as? [String: String], sourceJSON)
   }
 
   func test_asJSON_shouldReturnMockWithResponseCode_whenResponseHasCode() {
@@ -42,8 +42,8 @@ final class MockMarkTests: XCTestCase {
     )
 
     let result = mockMark.asJSON
-    let resultMock = result["mock"] as! [String: Any]
-    XCTAssertEqual(resultMock["responseCode"] as! Int, 456)
+    let resultMock = result["mock"] as? [String: Any]
+    XCTAssertEqual(resultMock?["responseCode"] as? Int, 456)
   }
 
   func test_asJSON_shouldReturnMockWithError_whenResponseHasError() {
@@ -54,7 +54,7 @@ final class MockMarkTests: XCTestCase {
     )
 
     let result = mockMark.asJSON
-    let resultMock = result["mock"] as! [String: Any]
-    XCTAssertEqual(resultMock["error"] as! [String: String], ["A": "B"])
+    let resultMock = result["mock"] as? [String: Any]
+    XCTAssertEqual(resultMock?["error"] as? [String: String], ["A": "B"])
   }
 }

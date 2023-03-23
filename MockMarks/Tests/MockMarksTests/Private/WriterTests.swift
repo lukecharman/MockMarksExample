@@ -57,7 +57,7 @@ private class MockFileManager: FileManager {
   override func createDirectory(
     at url: URL,
     withIntermediateDirectories createIntermediates: Bool,
-    attributes: [FileAttributeKey : Any]? = nil
+    attributes: [FileAttributeKey: Any]? = nil
   ) throws {
     didCallCreateDirectory = true
   }

@@ -67,7 +67,7 @@ final class SessionTests: XCTestCase {
     mockRecorder.mockedShouldRecord = true
 
     mockMarksSession.recorder = mockRecorder
-    _ = mockMarksSession.dataTask(with: urlRequest) { data, _, _ in }
+    _ = mockMarksSession.dataTask(with: urlRequest) { _, _, _ in }
     XCTAssert(mockRecorder.didCallRecord)
   }
 
@@ -89,7 +89,7 @@ final class SessionTests: XCTestCase {
     mockRecorder.mockedShouldRecord = true
 
     mockMarksSession.recorder = mockRecorder
-    _ = mockMarksSession.dataTask(with: url) { data, _, _ in }
+    _ = mockMarksSession.dataTask(with: url) { _, _, _ in }
     XCTAssert(mockRecorder.didCallRecord)
   }
 }
@@ -98,13 +98,19 @@ private class MockSession: URLSession {
   var didCallDataTaskWithURLRequest = false
   var didCallDataTaskWithURL = false
 
-  override func dataTask(with request: URLRequest, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
+  override func dataTask(
+    with request: URLRequest,
+    completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void
+  ) -> URLSessionDataTask {
     didCallDataTaskWithURLRequest = true
     let task = URLSession.shared.dataTask(with: request, completionHandler: completionHandler)
     return MockDataTask(mocking: task, completionHandler: completionHandler)
   }
 
-  override func dataTask(with url: URL, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
+  override func dataTask(
+    with url: URL,
+    completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void
+  ) -> URLSessionDataTask {
     didCallDataTaskWithURL = true
     let task = URLSession.shared.dataTask(with: url, completionHandler: completionHandler)
     return MockDataTask(mocking: task, completionHandler: completionHandler)
@@ -119,7 +125,7 @@ private class MockDataTask: DataTask {
 }
 
 private class MockRecorder: RecorderInterface {
-  var recordings: [[String : Any]] = [[:]]
+  var recordings: [[String: Any]] = [[:]]
 
   var mockedShouldRecord = false
 

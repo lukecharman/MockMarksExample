@@ -30,16 +30,18 @@ class DataTask: URLSessionDataTask {
     self.resume(processInfo: .processInfo)
   }
 
-  /// Begin executing the task. If a mocked response for this task is provided within MockMarks's queued responses, it will
-  /// be passed to the `completionHandler`. If such a response is not provided, the superclass will handle the function.
-  /// We also need to be running UI tests to proceed with the custom implementation, so we don't interfere with the real app.
+  /// Begin executing the task. If a mocked response for this task is provided within MockMarks's
+  /// queued responses, it will be passed to the `completionHandler`. If such a response is
+  /// not provided, the superclass will handle the function. We also need to be running UI tests to
+  /// proceed with the custom implementation, so we don't interfere with the real app.
   func resume(processInfo: ProcessInfo = .processInfo) {
     guard let url = task.currentRequest?.url, MockMarks.shared.isXCUI(processInfo: processInfo) else {
       return task.resume()
     }
 
-    /// Ask MockMarks to mock the call. If it has a queued response, it will call the completion handler. If not, tell the task to
-    /// resume using the superclass's implementation of `resume`, which may hit the real network, etc.
+    /// Ask MockMarks to mock the call. If it has a queued response, it will call the completion
+    /// handler. If not, tell the task to resume using the superclass's implementation of `resume`,
+    /// which may hit the real network, etc.
     if !MockMarks.shared.dispatchNextQueuedResponse(for: url, to: completionHandler) {
       task.resume()
     }

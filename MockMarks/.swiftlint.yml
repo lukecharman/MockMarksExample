@@ -1,0 +1,6 @@
+included:
+  - Sources
+  - Tests
+
+disabled_rules:
+  - large_tuple

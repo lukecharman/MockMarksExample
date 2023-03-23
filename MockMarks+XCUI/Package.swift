@@ -10,10 +10,13 @@ let package = Package(
             targets: ["MockMarks+XCUI"]
         ),
     ],
+    dependencies: [
+      .package(url: "https://github.com/Realm/SwiftLint", branch: "main"),
+    ],
     targets: [
         .target(
             name: "MockMarks+XCUI",
-            dependencies: []
+            plugins: [.plugin(name: "SwiftLintPlugin", package: "SwiftLint")]
         )
     ]
 )

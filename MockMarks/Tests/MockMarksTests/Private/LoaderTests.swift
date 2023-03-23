@@ -38,7 +38,10 @@ final class LoaderTests: XCTestCase {
     let result = loader.loadJSON(from: url)
     XCTAssertEqual(result![0].url.absoluteString, "https://testing-some-json")
 
-    let expectedResult = try! JSONSerialization.data(withJSONObject: ["MOCKED OR WHATEVER"])
+    guard let expectedResult = try? JSONSerialization.data(withJSONObject: ["MOCKED OR WHATEVER"]) else {
+      return XCTFail(#function)
+    }
+
     XCTAssertEqual(result![0].response.data!, expectedResult)
   }
 

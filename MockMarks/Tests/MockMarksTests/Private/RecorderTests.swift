@@ -39,7 +39,7 @@ final class RecorderTests: XCTestCase {
   func test_record_shouldRecordValidMockMark() {
     let recorder = Recorder()
     let url = URL(string: "A")!
-    let data = try! JSONSerialization.data(withJSONObject: ["A": "B"])
+    let data = try? JSONSerialization.data(withJSONObject: ["A": "B"])
     let response = HTTPURLResponse(url: url, statusCode: 123, httpVersion: nil, headerFields: nil)
 
     recorder.record(url: url, data: data, response: response, error: TestError.generic)
@@ -48,14 +48,14 @@ final class RecorderTests: XCTestCase {
       return XCTFail(#function)
     }
 
-    XCTAssertEqual(recording["url"] as! String, url.absoluteString)
+    XCTAssertEqual(recording["url"] as? String, url.absoluteString)
 
     guard let mock = recording["mock"] as? [String: Any] else {
       return XCTFail(#function)
     }
 
-    XCTAssertEqual(mock["json"] as! [String: String], ["A": "B"])
-    XCTAssertEqual(mock["responseCode"] as! Int, 123)
+    XCTAssertEqual(mock["json"] as? [String: String], ["A": "B"])
+    XCTAssertEqual(mock["responseCode"] as? Int, 123)
   }
 
   func test_record_shouldAskWriterToWrite() {
@@ -69,7 +69,7 @@ final class RecorderTests: XCTestCase {
 private class MockWriter: WriterInterface {
   var writeWasCalled = false
 
-  func write(recordings: [[String : Any]]) {
+  func write(recordings: [[String: Any]]) {
     writeWasCalled = true
   }
 }

@@ -18,13 +18,13 @@ final class DataTaskTests: XCTestCase {
 
   func test_init_shouldStoreTask() {
     let task = URLSessionDataTask()
-    let mockMarksTask = DataTask(mocking: task) { _, _ ,_ in }
+    let mockMarksTask = DataTask(mocking: task) { _, _, _ in }
     XCTAssertIdentical(task, mockMarksTask.task)
   }
 
   func test_overriddenResume_shouldCallInternalResume() {
     let task = MockURLSessionDataTask()
-    let mockMarksTask = DataTask(mocking: task) { _, _ ,_ in }
+    let mockMarksTask = DataTask(mocking: task) { _, _, _ in }
     mockMarksTask.resume()
     XCTAssert(task.didCallResume)
   }
@@ -62,7 +62,7 @@ final class DataTaskTests: XCTestCase {
     mockedProcessInfo.mockedIsRunningXCUI = true
 
     let url = URL(string: "A")!
-    let data = try! JSONSerialization.data(withJSONObject: ["A": "B"])
+    guard let data = try? JSONSerialization.data(withJSONObject: ["A": "B"]) else { return XCTFail(#function) }
     let response = MockMark.Response(data: data, urlResponse: nil, error: nil)
     MockMarks.shared.queue.queue(mockmark: MockMark(url: URL(string: "A")!, response: response))
 

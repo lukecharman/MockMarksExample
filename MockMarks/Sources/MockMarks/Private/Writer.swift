@@ -26,9 +26,11 @@ class Writer: WriterInterface {
     self.fileManager = fileManager
   }
 
-  func write(recordings: [[String : Any]]) throws {
+  func write(recordings: [[String: Any]]) throws {
     guard let path, let file else { throw WriterError.filePathNotFound }
-    guard let data = try? JSONSerialization.data(withJSONObject: recordings) else { throw WriterError.couldNotSerializeJSON }
+    guard let data = try? JSONSerialization.data(withJSONObject: recordings) else {
+      throw WriterError.couldNotSerializeJSON
+    }
 
     var url = URL(safePath: path)
     try fileManager.createDirectory(at: url, withIntermediateDirectories: true)
