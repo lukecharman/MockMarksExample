@@ -18,8 +18,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     self.window = UIWindow(windowScene: windowScene)
 
-    // 1. Do MockMarks's global setup, passing in our session.
-    MockMarks.shared.setUp(session: Session(mocking: .shared))
+    // 1. Do MockMarks's global setup.
+    MockMarks.shared.setUp(session: Session())
 
     // 2. Use the MockMarks session if it's available in your app.
     let vm = ViewModel(urlSession: MockMarks.shared.session as? URLSession ?? .shared)

@@ -2,7 +2,9 @@
 
 ## What is MockMarks?
 
-MockMarks is a pair of Swift packages used to easily create local, mocked responses to network calls made via `URLSession`. These are managed entirely within Xcode, and no HTTP server or other intermediary is required. Using MockMarks, you can:
+MockMarks is a pair of Swift packages used to easily create local, mocked responses to network calls made
+via `URLSession`. These are managed entirely within Xcode, and no HTTP server or other intermediary is required.
+Using MockMarks, you can:
 
 * Queue specific mocked JSON responses to requests to specific endpoint URLs.
 * Return those mocked responses in the order they were queued to create a flow.
@@ -10,48 +12,42 @@ MockMarks is a pair of Swift packages used to easily create local, mocked respon
 
 ## How does it work?
 
-`MockMarks` and its sister package `MockMarks+XCUI` are added as dependencies of your `App` and its `AppUITests` targets respectively. They're only a few kilobytes in size and will have no major impact on the size of your release binary in the App Store. MockMarks works best when your app uses a shared instance of `URLSession`, as in this case, you only need `import MockMarks` once. To get up and running:
+`MockMarks` and its sister package `MockMarks+XCUI` are added as dependencies of your `App` and its `AppUITests`
+targets respectively. They're only a few kilobytes in size and will have no major impact on the size of your release
+binary in the App Store. MockMarks works best when your app uses a shared instance of `URLSession`, as in this case,
+you only need `import MockMarks` once. To get up and running:
 
+### In the project:
 * Add `MockMarks` as a dependency of your app.
 * Add `MockMarks` and `MockMarks+XCUI` as dependencies of your UI test target
-  * Project Settings -> tap your UI test target -> Build Phases -> add them inside Link Binary With Libraries
+  * Tap your app's project in the Project Navigator.
+  * Under "Targets", tap your app's UI testing target.
+  * Tap Build Phases.
+  * Unfold the "Link Binary With Libraries" section.
+  * Use the plus icon to add both `MockMarks` and `MockMarks+XCUI` to the list.
+  * Ensure they are both assigned the 'Required' status.
+
+### In the app:
 * In your app, set up MockMarks as soon as your app launches:
   ```
-  if MockMarks.isXCUITest {
-    MockMarks.setUp()
-    MockMarks.session = MockMarks.Session(mocking: .shared) 
-  }
+  MockMarks.shared.setUp(session: Session())
   ```
+* This will implicitly mock `URLSession.shared`, but you can pass in your own if you prefer.
 * When you use `URLSession` in your app, use `MockMarks.session` instead:
   ```
-  SomeRandomViewModel(urlSession: MockMarks.session ?? .shared)
+  ViewModel(urlSession: MockMarks.shared.session as? URLSession ?? .shared)
   ```
-* Inside your app target, create your mock JSON files (more info on this coming!)
-  ```
-  [
-    {
-      "url": "https://the-endpoint/you/wanna/mock",
-      "mock": {
-        "yourMockedResponse": "goesHere"
-      }
-    }
-  ]
-  ```
+  
+### In the UI test target:
 * In your UI test target, have the test classes inherit from `MockMarksUITestCase`.
-* In the actual tests, launch the app with the name of the mocks file to use for this test.
-  Here, we'd name the mock file in the app target "test_aThing_doesAnotherThing().json"
-  ```
-  class MockMarksExampleUITests: MockMarksUITestCase {
-    func test_aThing_doesAnotherThing() {
-      launchApp(withMocksNamed: #function)
-      XCTAssert(self.app.staticTexts["MOCKED"].waitForExistence(timeout: 5))
-    }
-  }
-  ```
+* Call the custom `setUp()` method, like so, passing in whether or not you'd like to record.
+* This will launch your app with the requires environment variables to use MockMarks.
 
-For now, that's about it! The app will then use the mocked responses, in order, when you call `URLSession`'s `dataTask` methods.
-
-The JSON files live inside your app bundle, but we don't want to ship them with the app itself. So, we can strip them out by excluding them from release builds. More info to come, early days, etc.
+```
+override func setUp() {
+  super.setUp(recording: false)
+}
+```
 
 ## Show me!
 
