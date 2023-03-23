@@ -11,4 +11,11 @@ This package should be imported into your UI testing target, not your app target
 * Ensure they are both assigned the 'Required' status.
 
 In your own test classes that subclass `MockMarksUITestCase`, there's just one thing to do:
-* Call `setUp()`.
+* Call the custom `setUp()` method, like so, passing in whether or not you'd like to record.
+* This will launch your app with the requires environment variables to use MockMarks.
+
+```
+override func setUp() {
+  super.setUp(recording: false)
+}
+```

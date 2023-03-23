@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		A36252A629B0D8110047B0B2 /* MockMarksExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36252A529B0D8110047B0B2 /* MockMarksExampleUITests.swift */; };
-		A3AEB54129B0CFD300F46D4E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3AEB54029B0CFD300F46D4E /* AppDelegate.swift */; };
 		A3AEB54329B0CFD300F46D4E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3AEB54229B0CFD300F46D4E /* SceneDelegate.swift */; };
 		A3AEB54529B0CFD300F46D4E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3AEB54429B0CFD300F46D4E /* ViewController.swift */; };
 		A3AEB57229B0CFF200F46D4E /* MockMarks in Frameworks */ = {isa = PBXBuildFile; productRef = A3AEB57129B0CFF200F46D4E /* MockMarks */; };
@@ -30,7 +29,6 @@
 /* Begin PBXFileReference section */
 		A36252A529B0D8110047B0B2 /* MockMarksExampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockMarksExampleUITests.swift; sourceTree = "<group>"; };
 		A3AEB53D29B0CFD300F46D4E /* MockMarksExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MockMarksExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		A3AEB54029B0CFD300F46D4E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A3AEB54229B0CFD300F46D4E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		A3AEB54429B0CFD300F46D4E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		A3AEB54E29B0CFD400F46D4E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -81,7 +79,6 @@
 		A3AEB53F29B0CFD300F46D4E /* MockMarksExample */ = {
 			isa = PBXGroup;
 			children = (
-				A3AEB54029B0CFD300F46D4E /* AppDelegate.swift */,
 				A3AEB54229B0CFD300F46D4E /* SceneDelegate.swift */,
 				A3AEB54429B0CFD300F46D4E /* ViewController.swift */,
 				A3AEB57B29B0D09300F46D4E /* ViewModel.swift */,
@@ -212,7 +209,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				A3AEB54529B0CFD300F46D4E /* ViewController.swift in Sources */,
-				A3AEB54129B0CFD300F46D4E /* AppDelegate.swift in Sources */,
 				A3AEB57C29B0D09300F46D4E /* ViewModel.swift in Sources */,
 				A3AEB54329B0CFD300F46D4E /* SceneDelegate.swift in Sources */,
 			);

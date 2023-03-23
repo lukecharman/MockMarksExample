@@ -1,6 +1,11 @@
 import MockMarks
 import UIKit
 
+@UIApplicationMain
+class AppDelegate: UIResponder, UIApplicationDelegate {
+  var window: UIWindow?
+}
+
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
   var window: UIWindow?
 
