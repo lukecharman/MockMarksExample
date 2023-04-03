@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		812BA35929DB141400918989 /* MockMarks in Frameworks */ = {isa = PBXBuildFile; productRef = 812BA35829DB141400918989 /* MockMarks */; };
+		812BA35C29DB142300918989 /* MockMarks+XCUI in Frameworks */ = {isa = PBXBuildFile; productRef = 812BA35B29DB142300918989 /* MockMarks+XCUI */; };
 		A36252A629B0D8110047B0B2 /* MockMarksExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36252A529B0D8110047B0B2 /* MockMarksExampleUITests.swift */; };
 		A3AEB54329B0CFD300F46D4E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3AEB54229B0CFD300F46D4E /* SceneDelegate.swift */; };
 		A3AEB54529B0CFD300F46D4E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3AEB54429B0CFD300F46D4E /* ViewController.swift */; };
@@ -42,6 +44,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A3AEB57229B0CFF200F46D4E /* MockMarks in Frameworks */,
+				812BA35929DB141400918989 /* MockMarks in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -51,6 +54,7 @@
 			files = (
 				A3AEB57429B0CFFC00F46D4E /* MockMarks+XCUI in Frameworks */,
 				A3AEB57629B0CFFF00F46D4E /* MockMarks in Frameworks */,
+				812BA35C29DB142300918989 /* MockMarks+XCUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -120,6 +124,7 @@
 			name = MockMarksExample;
 			packageProductDependencies = (
 				A3AEB57129B0CFF200F46D4E /* MockMarks */,
+				812BA35829DB141400918989 /* MockMarks */,
 			);
 			productName = MockMarksExample;
 			productReference = A3AEB53D29B0CFD300F46D4E /* MockMarksExample.app */;
@@ -142,6 +147,7 @@
 			packageProductDependencies = (
 				A3AEB57329B0CFFC00F46D4E /* MockMarks+XCUI */,
 				A3AEB57529B0CFFF00F46D4E /* MockMarks */,
+				812BA35B29DB142300918989 /* MockMarks+XCUI */,
 			);
 			productName = MockMarksExampleUITests;
 			productReference = A3AEB55D29B0CFD400F46D4E /* MockMarksExampleUITests.xctest */;
@@ -176,6 +182,10 @@
 				Base,
 			);
 			mainGroup = A3AEB53429B0CFD300F46D4E;
+			packageReferences = (
+				812BA35729DB141400918989 /* XCRemoteSwiftPackageReference "MockMarks" */,
+				812BA35A29DB142300918989 /* XCRemoteSwiftPackageReference "MockMarksXCUI" */,
+			);
 			productRefGroup = A3AEB53E29B0CFD300F46D4E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -482,7 +492,36 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		812BA35729DB141400918989 /* XCRemoteSwiftPackageReference "MockMarks" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/lukecharman/MockMarks";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+		812BA35A29DB142300918989 /* XCRemoteSwiftPackageReference "MockMarksXCUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/lukecharman/MockMarksXCUI";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
+		812BA35829DB141400918989 /* MockMarks */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 812BA35729DB141400918989 /* XCRemoteSwiftPackageReference "MockMarks" */;
+			productName = MockMarks;
+		};
+		812BA35B29DB142300918989 /* MockMarks+XCUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 812BA35A29DB142300918989 /* XCRemoteSwiftPackageReference "MockMarksXCUI" */;
+			productName = "MockMarks+XCUI";
+		};
 		A3AEB57129B0CFF200F46D4E /* MockMarks */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MockMarks;
